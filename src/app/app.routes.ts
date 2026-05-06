@@ -35,6 +35,8 @@ export const routes: Routes = [
       { path: 'asset-class-list', loadComponent: () => import('./pages/admin/asset-class-list/asset-class-list.component').then(m => m.AssetClassListComponent) },
       { path: 'asset-mapping-list', loadComponent: () => import('./pages/admin/asset-mapping-list/asset-mapping-list.component').then(m => m.AssetMappingListComponent) },
       { path: 'hr-finance-list', loadComponent: () => import('./pages/admin/hr-finance-list/hr-finance-list.component').then(m => m.HrFinanceListComponent) },
+      { path: 'add-location', loadComponent: () => import('./pages/admin/add-location/add-location.component').then(m => m.AddLocationComponent) },
+      { path: 'view-locations', loadComponent: () => import('./pages/admin/view-locations/view-locations.component').then(m => m.ViewLocationsComponent) },
     ]
   },
   {

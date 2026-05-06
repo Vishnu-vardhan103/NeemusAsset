@@ -18,6 +18,8 @@ export class AssetListComponent implements OnInit {
 
   /* ── Column definitions ───────────────────────────── */
   columns: TableColumn[] = [
+    { field: 'edit', headerText: 'Edit', width: 100, textAlign: 'Center' },
+    { field: 'delete', headerText: 'Delete', width: 100, textAlign: 'Center' },
     { field: 'mainAssetNumber',  headerText: 'Asset Number',   width: 160, isPrimaryKey: true, clipMode: 'EllipsisWithTooltip' },
     { field: 'subNumber',        headerText: 'Sub No.',         width: 90,  textAlign: 'Center' },
     { field: 'assetDescription', headerText: 'Description',     width: 230, clipMode: 'EllipsisWithTooltip' },

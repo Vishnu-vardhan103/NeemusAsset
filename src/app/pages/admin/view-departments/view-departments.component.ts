@@ -29,6 +29,8 @@ export class ViewDepartmentsComponent implements OnInit {
   ];
 
   columns: TableColumn[] = [
+    { field: 'edit', headerText: 'Edit', width: 100, textAlign: 'Center' },
+    { field: 'delete', headerText: 'Delete', width: 100, textAlign: 'Center' },
     { field: 'name', headerText: 'Department Name', width: 250 },
     { field: 'code', headerText: 'Dept Code', width: 120 },
     { field: 'head', headerText: 'Dept Head', width: 150 },

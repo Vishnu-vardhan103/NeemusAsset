@@ -86,21 +86,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
             { name: "Assign Non NRL User", path: "/admin/add-employee" },
             { name: "Assign Asset Class to Department", path: "/admin/add-asset-class" },
             { name: "Assign Dept wise Admin, Auditor", path: "/admin/asset-mapping" },
+            {name:"Location Master", path:"/admin/add-location"},
             { name: "Hr Finance Master", path: "/admin/hr-finance" },
             { name: "Dept Master", path: "/admin/view-departments" },
             { name: "Employee Details", path: "/admin/view-employees" },
             { name: "Dept wise Employees", path: "/admin/dept-custodian-list" },
           ],
         },
-        // {
-        //   name: "Location Master",
-        //   icon: "location_on",
-        //   subMenu: [
-        //     { name: "View Location", path: "/admin/assets/location" },
-        //   ],
-        // },
       
-       
       ],
 
       "IT-Admin": [

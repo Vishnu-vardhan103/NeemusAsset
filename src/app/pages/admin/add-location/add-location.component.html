@@ -1,0 +1,48 @@
+<div class="container-center p-6">
+  <div class="card-wrapper max-w-4xl mx-auto">
+    <app-common-card 
+      title="Add Location" 
+      subtitle="Register a new location and its code" 
+      buttonLabel="Save Location" 
+      icon="add_location"
+      (onAction)="saveLocation()">
+      
+      <div class="flex flex-col gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Location Name -->
+          <div class="flex flex-col gap-2">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest ml-1">Location Name</span>
+            <mat-form-field appearance="outline" class="modern-field w-full">
+              <mat-label>Location</mat-label>
+              <input matInput [(ngModel)]="locationData.location" placeholder="e.g. Headquarters" required>
+              <mat-icon matPrefix class="text-indigo-500 mr-2">business</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <!-- Location Code -->
+          <div class="flex flex-col gap-2">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest ml-1">Location Code</span>
+            <mat-form-field appearance="outline" class="modern-field w-full">
+              <mat-label>Location Code</mat-label>
+              <input matInput [(ngModel)]="locationData.code" placeholder="e.g. HQ-01" required>
+              <mat-icon matPrefix class="text-indigo-500 mr-2">tag</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <!-- Block -->
+          <div class="flex flex-col gap-2 md:col-span-2">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest ml-1">Block</span>
+            <mat-form-field appearance="outline" class="modern-field w-full">
+              <mat-label>Block</mat-label>
+              <input matInput [(ngModel)]="locationData.block" placeholder="e.g. Building A" required>
+              <mat-icon matPrefix class="text-indigo-500 mr-2">domain</mat-icon>
+            </mat-form-field>
+          </div>
+          
+        </div>
+      </div>
+
+    </app-common-card>
+  </div>
+</div>

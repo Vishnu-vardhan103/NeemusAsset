@@ -7,6 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   GridModule,
   GridComponent,
@@ -44,7 +47,7 @@ export interface TableColumn {
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule, GridModule],
+  imports: [CommonModule, GridModule, MatButtonModule, MatIconModule, MatTooltipModule],
   providers: [
     FilterService,
     SortService,

@@ -44,6 +44,8 @@ export class DeptCustodianListComponent implements OnInit {
   filteredData: any[] = [];
 
   columns: TableColumn[] = [
+    { field: 'edit', headerText: 'Edit', width: 100, textAlign: 'Center' },
+    { field: 'delete', headerText: 'Delete', width: 100, textAlign: 'Center' },
     { field: 'id', headerText: 'Custodian ID', width: 150 },
     { field: 'name', headerText: 'Custodian Name', width: 250 },
     { field: 'dept', headerText: 'Department Name', width: 200 },

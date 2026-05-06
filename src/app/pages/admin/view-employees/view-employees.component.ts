@@ -24,6 +24,8 @@ export class ViewEmployeesComponent implements OnInit {
   ];
 
   columns: TableColumn[] = [
+    { field: 'edit', headerText: 'Edit', width: 100, textAlign: 'Center' },
+    { field: 'delete', headerText: 'Delete', width: 100, textAlign: 'Center' },
     { field: 'id', headerText: 'Employee ID', width: 120 },
     { field: 'name', headerText: 'Custodian Name', width: 200 },
     { field: 'designation', headerText: 'Designation', width: 180 },
