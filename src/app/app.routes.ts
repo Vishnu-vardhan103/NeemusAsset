@@ -88,6 +88,17 @@ export const routes: Routes = [
       { path: 'custodian-transfer-history', loadComponent: () => import('./pages/requestor/custodian-transfer-history/custodian-transfer-history.component').then(m => m.CustodianTransferHistoryComponent) },
       { path: 'asset-return', loadComponent: () => import('./pages/requestor/asset-return/asset-return.component').then(m => m.AssetReturnComponent) },
       { path: 'asset-return-history', loadComponent: () => import('./pages/requestor/asset-return-history/asset-return-history.component').then(m => m.AssetReturnHistoryComponent) },
+
+    ]
+  },
+  {
+path: 'auditor',
+component: MainLayoutComponent,
+children: [ 
+   { path: 'ViewAudits', loadComponent: () => import('./pages/auditor/view-audits/view-audits.component').then(m => m.ViewAuditsComponent) },
+   { path: 'AssetAudits', loadComponent: () => import('./pages/auditor/asset-audit/asset-audit.component').then(m => m.AssetAuditComponent) },
+   { path: 'AuditStatus', loadComponent: () => import('./pages/auditor/audit-status/audit-status').then(m => m.AuditStatusComponent) },
+   {path: 'AssetByAudit', loadComponent: () => import('./pages/auditor/assets-by-audits/assets-by-audits').then(m => m.AssetsByAuditsComponent) },
     ]
   },
   {

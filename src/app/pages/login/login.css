@@ -3,8 +3,262 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.login-header {
+  background: #005696 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 80px;
+  height: auto;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.company-name {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.company-sub {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 600 !important;
+}
+
+.n-asset-text {
+  text-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+}
+
+.text-green-400 {
+  color: #4ade80 !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Modern Ken Burns Carousel Effect */
+.login-bg-carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.login-bg-carousel::before,
+.login-bg-carousel::after,
+.login-bg-carousel-inner {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* Layer 1 */
+.login-bg-carousel::before {
+  background-image: url('../../../assets/asset1.png');
+  animation-name: kenburns-1;
+}
+
+/* Layer 2 */
+.login-bg-carousel::after {
+  background-image: url('../../../assets/asset2.jpg');
+  animation-name: kenburns-2;
+}
+
+/* Layer 3 */
+.login-bg-carousel-inner {
+  background-image: url('../../../assets/asset3.jpg');
+  animation-name: kenburns-3;
+  z-index: 2;
+}
+
+@keyframes kenburns-1 {
+  0% { transform: scale(1); opacity: 1; }
+  33.33% { transform: scale(1.1) translate(-2%, -1%); opacity: 1; }
+  36% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes kenburns-2 {
+  0% { opacity: 0; }
+  30% { opacity: 0; transform: scale(1); }
+  33.33% { opacity: 1; transform: scale(1); }
+  66.66% { transform: scale(1.1) translate(1%, -2%); opacity: 1; }
+  69% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes kenburns-3 {
+  0% { opacity: 0; }
+  63.33% { opacity: 0; transform: scale(1); }
+  66.66% { opacity: 1; transform: scale(1); }
+  96.66% { transform: scale(1.1) translate(-1%, 1%); opacity: 1; }
+  100% { opacity: 1; transform: scale(1.1) translate(-1%, 1%); }
+}
+
+.login-bg-carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.glass-card {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+}
+
+.login-title {
+  color: #fff;
+  font-size: 2.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.input-container {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.icon-box {
+  background: #005696;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  min-width: 50px;
+}
+
+.login-input {
+  flex: 1;
+  border: none;
+  padding: 12px 15px;
+  font-size: 1rem;
+  outline: none;
+  color: #333;
+}
+
+.login-input::placeholder {
+  color: #999;
+}
+
+.role-section {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.role-label {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.role-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.role-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.role-radio {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.role-radio:checked {
+  background: #fff;
+}
+
+.role-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: #005696;
+  border-radius: 50%;
+}
+
+.login-btn {
+  background: #005696;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background: #004a8c;
+}
+
+/* Loader Styles */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes roll {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loader-roll {
+  animation: roll 3s linear infinite;
 }

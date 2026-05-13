@@ -1,111 +1,97 @@
-<div class="h-screen w-screen flex items-center justify-center relative overflow-hidden bg-[var(--bg-page)]">
+<div class="h-screen w-screen flex flex-col relative overflow-hidden bg-black">
 
-  <!-- Card -->
-  <div class="relative z-20 w-full max-w-[450px] mx-4 p-8 sm:p-[50px_60px] rounded-[30px] sm:rounded-[40px] 
-              bg-[var(--bg-card)] backdrop-blur-[30px] border border-[var(--border-card)] 
-              text-[var(--text-main)] text-center shadow-[var(--shadow-card)] animate-[fadeIn_0.7s_ease-out]">
-
-    <h1 class="text-[var(--font-size-h1)] mb-8 font-[var(--font-weight-light)] tracking-tight">Login</h1>
-
-    <!-- User ID -->
-    <div class="text-left mb-6">
-      <label class="block text-[var(--font-size-small)] font-[var(--font-weight-bold)] text-[var(--text-muted)] mb-2 tracking-widest uppercase pl-1">
-        User ID
-      </label>
-
-      <div class="relative">
-        <mat-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-dim)] text-xl">
-          person
-        </mat-icon>
-
-        <input
-          type="text"
-          [(ngModel)]="userId"
-          placeholder="Enter User ID"
-          class="w-full bg-[var(--bg-input)] border border-[var(--border-input)] rounded-xl 
-                 pl-12 pr-4 py-3 text-[var(--font-size-base)] text-[var(--text-main)] outline-none
-                 focus:border-[var(--color-accent)] focus:bg-[var(--bg-input)] placeholder:text-[var(--text-dim)]"
-        />
+  <!-- Header -->
+  <div class="login-header relative z-30 w-full flex justify-between items-center px-4 sm:px-10">
+    <div class="flex-1 flex items-center gap-3 sm:gap-4">
+      <img src="../../../assets/logo.png" alt="Logo" class="h-10 sm:h-14 w-auto object-contain z-[60]">
+      <div class="flex flex-col hidden sm:flex">
+        <span class="company-name text-base sm:text-xl leading-tight">Neemus Software Solutions Hyderabad</span>
+        <span class="company-sub text-[0.6rem] sm:text-[0.7rem] tracking-[0.1em] text-white">Asset
+          Management System</span>
       </div>
     </div>
 
-    <!-- Password -->
-    <div class="text-left mb-6">
-      <div class="flex justify-between items-center mb-2">
-        <label class="text-[var(--font-size-small)] font-[var(--font-weight-bold)] text-[var(--text-muted)] tracking-widest uppercase pl-1">
-          Password
-        </label>
-
-        <button
-          (click)="togglePassword()"
-          class="text-[var(--font-size-small)] font-[var(--font-weight-bold)] text-[var(--color-accent)] uppercase tracking-wide hover:opacity-80">
-          {{ showPassword ? 'Hide' : 'Show' }}
-        </button>
-      </div>
-
-      <div class="relative">
-        <mat-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-dim)] text-xl">
-          lock
-        </mat-icon>
-
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          [(ngModel)]="password"
-          placeholder="Enter Password"
-          class="w-full bg-[var(--bg-input)] border border-[var(--border-input)] rounded-xl 
-                 pl-12 pr-4 py-3 text-[var(--font-size-base)] text-[var(--text-main)] outline-none
-                 focus:border-[var(--color-accent)] focus:bg-[var(--bg-input)] placeholder:text-[var(--text-dim)]"
-        />
-      </div>
+    <div class="flex-1 flex flex-col items-center justify-center">
+      <span class="n-asset-text italic tracking-tighter text-lg sm:text-2xl font-black leading-none">
+        <span class="text-green-400">N</span><span class="text-white">-ASSET</span>
+      </span>
+      <span class="text-[0.55rem] sm:text-[0.65rem] text-white tracking-[0.1em] mt-1 text-center hidden md:block">
+        Tracking, Auditing and Maintaining Assets using QR/RFID
+      </span>
     </div>
 
-    <!-- Forgot -->
-    <div class="text-left mb-8 pl-1">
-      <a href="javascript:void(0)" class="text-[var(--color-accent)] text-[var(--font-size-base)] hover:opacity-80">
-        Forgot password?
-      </a>
+    <div class="flex-1 hidden lg:block">
+      <!-- Empty space to maintain center alignment -->
     </div>
+  </div>
 
-    <!-- Roles -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-10 text-left">
-      <label *ngFor="let role of roles" [for]="role" class="flex items-center gap-2 cursor-pointer">
+  <!-- Background Carousel -->
+  <div class="login-bg-carousel">
+    <div class="login-bg-carousel-inner"></div>
+    <div class="login-bg-carousel-overlay"></div>
+  </div>
 
-        <div class="relative w-4 h-4">
-          <input
-            type="radio"
-            [id]="role"
-            name="role"
-            [value]="role"
-            [(ngModel)]="selectedRole"
-            class="absolute opacity-0 w-0 h-0 peer"
-          />
+  <!-- Main Content Area -->
+  <div class="flex-1 flex items-center justify-center lg:justify-end lg:pr-32 pt-24">
 
-          <span class="absolute inset-0 border border-[var(--border-input)] rounded-full peer-checked:border-[var(--color-accent)]"></span>
+    <!-- Login Card -->
+    <div
+      class="glass-card relative z-20 w-full max-w-[420px] mx-4 p-8 sm:p-10 rounded-xl text-center animate-[fadeIn_0.7s_ease-out]">
 
-          <span class="hidden peer-checked:block absolute top-[3px] left-[3px] w-2 h-2 bg-[var(--color-accent)] rounded-full"></span>
+      <h1 class="login-title mb-6 sm:mb-8">Login</h1>
+
+      <!-- User ID -->
+      <div class="input-container">
+        <div class="icon-box">
+          <mat-icon>person</mat-icon>
         </div>
+        <input type="text" [(ngModel)]="userId" placeholder="UserName" class="login-input" />
+      </div>
 
-        <span class="text-[var(--font-size-small)] text-[var(--text-muted)] hover:text-[var(--text-main)]">
-          {{ role }}
-        </span>
-      </label>
+      <!-- Password -->
+      <div class="input-container">
+        <div class="icon-box">
+          <mat-icon>lock</mat-icon>
+        </div>
+        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="Password"
+          class="login-input" />
+      </div>
+
+      <!-- Roles -->
+      <div class="role-section">
+        <label class="role-label uppercase tracking-wider">Select Login Type</label>
+        <div class="role-group">
+          <label *ngFor="let role of roles" class="role-item">
+            <input type="radio" name="role" [value]="role" [(ngModel)]="selectedRole" class="role-radio" />
+            <span>{{ role }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Login Button -->
+      <button class="login-btn" (click)="onLogin()">Login</button>
+
+      <!-- Forgot Password (Subtle) -->
+      <div class="mt-4 text-right">
+        <a href="javascript:void(0)" class="text-white/50 hover:text-white text-xs transition-colors">Forgot
+          Password?</a>
+      </div>
     </div>
+  </div>
 
-    <!-- Buttons -->
-    <div class="flex flex-col gap-4">
-
-      <app-button
-        label="Log In"
-        variant="primary"
-        (btnClick)="onLogin()">
-      </app-button>
-
-      <app-button
-        label="Download"
-        variant="dark"
-        (btnClick)="onDownload()">
-      </app-button>
-
+  <!-- Loader Overlay -->
+  <div *ngIf="isLoading"
+    class="loader-overlay fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white/95">
+    <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+      <img src="../../../assets/NeemusAnimation.png" alt="Loading..." class="w-full h-full object-contain loader-roll">
+    </div>
+    <div class="mt-8 flex flex-col items-center gap-2">
+      <span class="text-slate-800 font-bold text-2xl tracking-widest uppercase">Neemus </span>
+      <div class="flex gap-1">
+        <div class="w-2 h-2 bg-[#005696] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        <div class="w-2 h-2 bg-[#005696] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+        <div class="w-2 h-2 bg-[#005696] rounded-full animate-bounce"></div>
+      </div>
     </div>
   </div>
 </div>

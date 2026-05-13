@@ -1,0 +1,130 @@
+<div class="min-h-screen bg-slate-50 p-8 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700">
+  
+  <div class="w-full max-w-5xl">
+    <app-common-card
+      title="Perform Asset Audit"
+      subtitle="Institutional Audit Management System"
+      icon="fact_check">
+      
+      <div class="space-y-8 py-4">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Select Location <span class="text-rose-500">*</span></label>
+            <select [(ngModel)]="selectedLocation" name="location" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+              <option value="">Select</option>
+              <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Select Audit <span class="text-rose-500">*</span></label>
+            <select [(ngModel)]="selectedAudit" name="audit" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+              <option value="">Select</option>
+              <option *ngFor="let audit of audits" [value]="audit">{{ audit }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2 flex justify-center" *ngIf="!auditStarted">
+          <app-button 
+            label="Start Audit" 
+            variant="primary" 
+            width="auto"
+            (btnClick)="onStartAudit()">
+          </app-button>
+        </div>
+
+        <!-- Second part of the form -->
+        <ng-container *ngIf="auditStarted">
+          <hr class="border-slate-200 my-6">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Select Asset Class <span class="text-rose-500">*</span></label>
+              <select [(ngModel)]="selectedAssetClass" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+                <option value="">Select</option>
+                <option *ngFor="let cls of assetClasses" [value]="cls">{{ cls }}</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Select Asset <span class="text-rose-500">*</span></label>
+              <div class="flex gap-2">
+                <select [(ngModel)]="selectedAsset" class="flex-1 px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+                  <option value="">Select</option>
+                  <option *ngFor="let ast of assets" [value]="ast">{{ ast }}</option>
+                </select>
+                <!-- Scanner icon placeholder -->
+                <button class="w-14 h-14 flex items-center justify-center bg-slate-100 border border-slate-200 rounded-2xl hover:bg-slate-200 transition-colors">
+                  <span class="material-icons text-orange-500">qr_code_scanner</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Asset Location</label>
+              <select [(ngModel)]="assetLocation" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+                <option value="">Select</option>
+                <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Select Custodian</label>
+              <select [(ngModel)]="selectedCustodian" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+                <option value="">Select</option>
+                <option *ngFor="let cus of custodians" [value]="cus">{{ cus }}</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Asset Status</label>
+              <select [(ngModel)]="assetStatus" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
+                <option value="">Select</option>
+                <option *ngFor="let stat of statuses" [value]="stat">{{ stat }}</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2 md:col-span-2">
+              <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Comments</label>
+              <textarea [(ngModel)]="comments" rows="3" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900 resize-none"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-4 flex justify-center">
+            <app-button 
+              [label]="editingRecordId ? 'Update' : 'Add'" 
+              variant="primary" 
+              width="auto"
+              (btnClick)="onAddAsset()">
+            </app-button>
+          </div>
+
+          <div class="mt-8 w-full overflow-hidden">
+            <app-data-table 
+              [data]="auditData" 
+              [columns]="columns" 
+              title="Audit Assets" 
+              [allowSelection]="false"
+              (onEdit)="onEditRecord($event)"
+              (onDelete)="onDeleteRecord($event)">
+            </app-data-table>
+          </div>
+
+          <div class="pt-6 flex justify-start">
+            <app-button 
+              label="Submit Audit" 
+              variant="dark" 
+              width="auto"
+              (btnClick)="onSubmitAudit()">
+            </app-button>
+          </div>
+        </ng-container>
+
+      </div>
+
+    </app-common-card>
+  </div>
+
+</div>

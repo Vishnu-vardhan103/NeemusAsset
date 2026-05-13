@@ -4,12 +4,11 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar';
 import { SidebarComponent } from '../sidebar/sidebar';
 
-import { SupportChatComponent } from '../../../../shared/components/support-chat/support-chat';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, SidebarComponent, SupportChatComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, SidebarComponent],
   template: `
     <div class="h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-hidden">
       <!-- Navbar -->
@@ -38,9 +37,6 @@ import { SupportChatComponent } from '../../../../shared/components/support-chat
           </div>
         </main>
       </div>
-
-      <!-- Support Chat -->
-      <app-support-chat></app-support-chat>
     </div>
   `
 })

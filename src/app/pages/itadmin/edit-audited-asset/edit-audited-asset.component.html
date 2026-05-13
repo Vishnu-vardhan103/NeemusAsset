@@ -69,7 +69,7 @@
     </div>
 
     <div class="mt-4 flex">
-      <app-button label="Update" variant="primary" (btnClick)="onUpdate()"></app-button>
+      <app-button label="Update" variant="primary" width="auto" (btnClick)="onUpdate()"></app-button>
     </div>
   </app-common-card>
 
@@ -78,23 +78,13 @@
     subtitle="View all audited assets"
     icon="list_alt">
     
-    <div class="border border-slate-200 rounded-xl overflow-hidden mt-4 shadow-sm">
-      <ejs-grid [dataSource]="auditedAssetData" [allowPaging]="true" [allowGrouping]="true" [pageSettings]="{ pageSize: 10 }">
-        <e-columns>
-          <e-column field="id" headerText="#" width="60"></e-column>
-          <e-column field="auditName" headerText="Audit Name" width="130"></e-column>
-          <e-column field="auditBy" headerText="Audit By" width="120"></e-column>
-          <e-column field="mainAssetNumber" headerText="Main Asset Number" width="160"></e-column>
-          <e-column field="assetClass" headerText="Asset Class" width="120"></e-column>
-          <e-column field="assetDesc" headerText="Asset Desc" width="250"></e-column>
-          <e-column field="location" headerText="Location" width="180"></e-column>
-          <e-column field="custodianId" headerText="Custodian ID" width="120"></e-column>
-          <e-column field="auditStatus" headerText="Audit Status" width="180"></e-column>
-          <e-column field="auditorComments" headerText="Auditor Comments" width="160"></e-column>
-          <e-column field="auditedDate" headerText="Audited Date" width="130"></e-column>
-          <e-column field="status" headerText="Status" width="120"></e-column>
-        </e-columns>
-      </ejs-grid>
+    <div class="mt-4">
+      <app-data-table 
+        title="Audited Asset List"
+        [columns]="auditedAssetColumns" 
+        [data]="auditedAssetData" 
+        [allowGrouping]="true">
+      </app-data-table>
     </div>
   </app-common-card>
 </div>

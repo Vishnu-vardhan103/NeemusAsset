@@ -229,16 +229,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
       ],
 
       "Auditor": [
-        { name: "Dashboard", path: "/user", icon: "dashboard" },
+        { name: "Dashboard", path: "/auditor", icon: "dashboard" },
         {
           name: "Audits",
           icon: "inventory_2",
           subMenu: [
-            { name: "View Audits", path: "/user/ViewAudits" },
-            { name: "Asset Audits", path: "/user/AssetAudit" },
-            { name: "Edit Audit Assets", path: "/user/EditAuditAsset" },
-            { name: "Audit wise status", path: "/user/AuditWiseStatus" },
-            { name: "Assets by Audits", path: "/user/AssetByAudit" },
+            { name: "View Audits", path: "/auditor/ViewAudits" },
+            { name: "Asset Audits", path: "/auditor/AssetAudits" },
+            // { name: "Edit Audit Assets", path: "/auditor/EditAuditAsset" },
+            { name: "Audit wise status", path: "/auditor/AuditStatus" },
+            { name: "AssetByAudit", path: "/auditor/AssetByAudit" },
           ],
         },
       ],

@@ -1,32 +1,30 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  GridModule, 
-  FilterService, 
-  SortService, 
-  PageService, 
-  GroupService,
-  ToolbarService,
-  ExcelExportService,
-  PdfExportService,
-  GridComponent
-} from '@syncfusion/ej2-angular-grids';
+import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
 import { CommonCardComponent } from '../../../shared/components/common-card/common-card.component';
 
 @Component({
   selector: 'app-audit-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, GridModule, CommonCardComponent],
-  providers: [FilterService, SortService, PageService, GroupService, ToolbarService, ExcelExportService, PdfExportService],
+  imports: [CommonModule, FormsModule, DataTableComponent, CommonCardComponent],
   templateUrl: './audit-list.component.html',
   styleUrls: []
 })
 export class AuditListComponent implements OnInit {
-  @ViewChild('grid') public grid!: GridComponent;
+  @ViewChild('dataTable') public dataTable!: DataTableComponent;
   
-  toolbarOptions: string[] = ['Search', 'ExcelExport', 'PdfExport'];
   filterType: string = 'All';
+
+  public auditColumns: TableColumn[] = [
+    { field: 'auditName', headerText: 'Audit Name', width: 150 },
+    { field: 'auditDescription', headerText: 'Audit Description', width: 200 },
+    { field: 'createdBy', headerText: 'CreatedBy', width: 120 },
+    { field: 'locationCode', headerText: 'Location Code', width: 130 },
+    { field: 'location', headerText: 'Location', width: 180 },
+    { field: 'auditDate', headerText: 'Audit Date', width: 130 },
+    { field: 'auditStatus', headerText: 'Audit Status', width: 120 }
+  ];
 
   public rawData: any[] = [
     { auditName: 'test audit', auditDescription: 'test added', createdBy: 'z_sohel', locationCode: 'NR72', location: 'NITROGEN PLANT', auditDate: '25-Apr-2023', auditStatus: 'Active' },
@@ -40,14 +38,6 @@ export class AuditListComponent implements OnInit {
 
   ngOnInit(): void {
     this.auditData = [...this.rawData];
-  }
-
-  toolbarClick(args: any): void {
-    if (args.item.id.includes('excelexport')) {
-      this.grid.excelExport();
-    } else if (args.item.id.includes('pdfexport')) {
-      this.grid.pdfExport();
-    }
   }
 
   onFilterChange() {
@@ -64,14 +54,14 @@ export class AuditListComponent implements OnInit {
     } else if (this.filterType === 'LocationWise') {
       this.auditData = [...this.rawData];
       setTimeout(() => {
-         this.grid.groupColumn('location');
+         this.dataTable.gridInstance.groupColumn('location');
       }, 100);
       return;
     }
     
     // Clear grouping if not LocationWise
-    if (this.filterType !== 'LocationWise' && this.grid && this.grid.groupSettings.columns?.length) {
-      this.grid.clearGrouping();
+    if (this.filterType !== 'LocationWise' && this.dataTable?.gridInstance && this.dataTable.gridInstance.groupSettings.columns?.length) {
+      this.dataTable.gridInstance.clearGrouping();
     }
   }
 }

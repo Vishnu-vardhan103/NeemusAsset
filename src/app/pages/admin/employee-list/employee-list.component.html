@@ -11,37 +11,15 @@
       </div>
     </div>
 
-    <div class="p-4">
-      <ejs-grid 
-        [dataSource]="data" 
-        [allowPaging]="true" 
-        [pageSettings]="pageSettings" 
-        [toolbar]="toolbar"
-        [allowSorting]="true"
-        [allowFiltering]="true"
-        gridLines="Horizontal"
-        class="modern-grid"
-      >
-        <e-columns>
-          <!-- Actions Column -->
-          <e-column headerText="Actions" width="120" textAlign="Center">
-            <ng-template #template let-data>
-              <div class="flex items-center justify-center gap-2">
-                <button mat-icon-button color="primary" (click)="editEmployee(data)" matTooltip="Edit User">
-                  <mat-icon class="text-teal-600">edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="deleteEmployee(data)" matTooltip="Delete User">
-                  <mat-icon class="text-rose-500">delete</mat-icon>
-                </button>
-              </div>
-            </ng-template>
-          </e-column>
-
-          <e-column field="userId" headerText="User ID" width="120" textAlign="Left"></e-column>
-          <e-column field="username" headerText="Username" width="200"></e-column>
-          <e-column field="email" headerText="Email ID" width="250"></e-column>
-        </e-columns>
-      </ejs-grid>
+    <div class="mt-4">
+      <app-data-table 
+        title="Employee Directory"
+        [columns]="empColumns" 
+        [data]="data" 
+        [allowGrouping]="true"
+        (onEdit)="editEmployee($event)"
+        (onDelete)="deleteEmployee($event)">
+      </app-data-table>
     </div>
   </div>
 </div>

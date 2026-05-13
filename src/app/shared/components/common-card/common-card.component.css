@@ -1,7 +1,7 @@
 :host {
   display: block;
   width: 100%;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* font-family: 'Inter', system-ui, -apple-system, sans-serif; */
 }
 
 .card-container {
@@ -81,7 +81,7 @@
 .card-title {
   margin: 0;
   font-size: 28px;
-  font-weight: 800;
+  font-weight: 500;
   color: #1e293b;
   letter-spacing: -0.025em;
 }
@@ -89,7 +89,7 @@
 .card-subtitle {
   margin: 4px 0 0 0;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.1em;

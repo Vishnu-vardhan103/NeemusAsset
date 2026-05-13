@@ -3,11 +3,11 @@
    Premium Syncfusion Grid Wrapper
    ═══════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap'); */
 
 :host {
   display: block;
-  font-family: 'Inter', sans-serif;
+  /* font-family: 'Inter', sans-serif; */
 }
 
 /* ── Wrapper ──────────────────────────────────────── */
@@ -57,7 +57,7 @@
 
 .dt-title {
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 500;
   color: #0f172a;
   margin: 0;
   line-height: 1.2;
@@ -108,7 +108,7 @@
 /* ── Syncfusion Grid Overrides ────────────────────── */
 ::ng-deep .e-grid {
   border: none !important;
-  font-family: 'Inter', sans-serif !important;
+  /* font-family: 'Inter', sans-serif !important; */
 }
 
 ::ng-deep .e-grid .e-headercell {

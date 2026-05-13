@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -90,6 +92,9 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() height: string | number = 400;
 
   @ViewChild('grid') grid!: GridComponent;
+  
+  @Output() onEdit = new EventEmitter<any>();
+  @Output() onDelete = new EventEmitter<any>();
 
   /** Expose grid instance for external actions */
   get gridInstance(): GridComponent {

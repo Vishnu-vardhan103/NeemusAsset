@@ -124,7 +124,7 @@
           <ng-template #checkEdit>
              <ng-container *ngIf="col.field === 'edit'; else checkDelete">
                 <div class="flex items-center justify-center">
-                   <button mat-icon-button color="primary" matTooltip="Edit">
+                   <button mat-icon-button color="primary" matTooltip="Edit" (click)="onEdit.emit(data)">
                      <mat-icon class="text-blue-600">edit</mat-icon>
                    </button>
                 </div>
@@ -134,7 +134,7 @@
           <ng-template #checkDelete>
              <ng-container *ngIf="col.field === 'delete'; else defaultVal">
                 <div class="flex items-center justify-center">
-                   <button mat-icon-button color="warn" matTooltip="Delete">
+                   <button mat-icon-button color="warn" matTooltip="Delete" (click)="onDelete.emit(data)">
                      <mat-icon class="text-rose-500">delete</mat-icon>
                    </button>
                 </div>

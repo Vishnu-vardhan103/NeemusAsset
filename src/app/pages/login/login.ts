@@ -9,7 +9,7 @@ import { AuthService } from '../../core/services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, ButtonComponent],
+  imports: [CommonModule, FormsModule, MatIconModule,],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -22,6 +22,7 @@ export class Login {
   showPassword = false;
   selectedRole = 'Requester';
   roles = ['Requester', 'Approver', 'Auditor', 'IT-Admin', 'Admin', 'HR Admin'];
+  isLoading = false;
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -30,13 +31,19 @@ export class Login {
   onLogin() {
     if (!this.selectedRole) return;
 
-    console.log('Login successful for role:', this.selectedRole);
-    
-    // Set the role in AuthService to update the sidebar
-    this.authService.setRole(this.selectedRole);
+    this.isLoading = true;
 
-    // All roles navigate to the unified dashboard layout
-    this.router.navigate(['/dashboard']);
+    // Simulate loading for the animation
+    setTimeout(() => {
+      console.log('Login successful for role:', this.selectedRole);
+      
+      // Set the role in AuthService to update the sidebar
+      this.authService.setRole(this.selectedRole);
+
+      // All roles navigate to the unified dashboard layout
+      this.router.navigate(['/dashboard']);
+      this.isLoading = false;
+    }, 2500);
   }
 
   onDownload() {
