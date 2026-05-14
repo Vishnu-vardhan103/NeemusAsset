@@ -1,41 +1,142 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BASE_URL } from '../../../core/Constant/apiConstant';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { 
+  GridModule, 
+  GridComponent,
+  EditService, 
+  ToolbarService, 
+  CommandColumnService, 
+  PageService, 
+  SortService, 
+  FilterService,
+  EditSettingsModel,
+  CommandModel,
+  PageSettingsModel,
+  FilterSettingsModel
+} from '@syncfusion/ej2-angular-grids';
 
 @Component({
   selector: 'app-view-departments',
   standalone: true,
-  imports: [CommonModule, DataTableComponent],
+  imports: [CommonModule, GridModule, ButtonModule],
+  providers: [
+    EditService,
+    ToolbarService,
+    CommandColumnService,
+    PageService,
+    SortService,
+    FilterService
+  ],
   templateUrl: './view-departments.component.html',
   styleUrls: ['./view-departments.component.css']
 })
 export class ViewDepartmentsComponent implements OnInit {
-  departments: any[] = [
-    { id: 1, name: 'Numaligarh Refinery Limited', code: 'NRL', head: 'John Doe', status: 'Active' },
-    { id: 2, name: 'Human Resources', code: 'HR', head: 'Jane Smith', status: 'Active' },
-    { id: 3, name: 'Finance', code: 'FIN', head: 'Robert Brown', status: 'Active' },
-    { id: 4, name: 'Information Technology', code: 'IT', head: 'Michael Wilson', status: 'Active' },
-    { id: 5, name: 'Vigilence', code: 'VIG', head: 'Sarah Parker', status: 'Active' },
-    { id: 6, name: 'Corporate Affairs', code: 'CORP', head: 'David Miller', status: 'Active' },
-    { id: 7, name: 'Company Secretary', code: 'CS', head: 'Emily Davis', status: 'Active' },
-    { id: 8, name: 'Internal Audit', code: 'AUD', head: 'Chris Evans', status: 'Active' },
-    { id: 9, name: 'Commercial', code: 'COMM', head: 'Laura Taylor', status: 'Active' },
-    { id: 10, name: 'Legal', code: 'LEG', head: 'Mark Thompson', status: 'Active' },
-    { id: 11, name: 'Operations', code: 'OPS', head: 'James Anderson', status: 'Active' },
-    { id: 12, name: 'Maintenance', code: 'MAINT', head: 'Patricia Moore', status: 'Active' },
-    { id: 13, name: 'Safety', code: 'SAFE', head: 'Richard Jackson', status: 'Active' },
-    { id: 14, name: 'Environment', code: 'ENV', head: 'Linda White', status: 'Active' },
-    { id: 15, name: 'Quality Control', code: 'QC', head: 'Thomas Harris', status: 'Active' }
+  @ViewChild('grid') public grid!: GridComponent;
+  
+  public departments: any[] = [];
+  private apiUrl = BASE_URL;
+  private headers = new HttpHeaders();
+
+  public editSettings: EditSettingsModel = { 
+    allowAdding: true,
+    allowEditing: true, 
+    allowDeleting: true, 
+    mode: 'Dialog',
+    showDeleteConfirmDialog: true
+  };
+  
+  public pageSettings: PageSettingsModel = { pageSize: 10, pageSizes: true };
+  public toolbar: string[] = ['Search'];
+  public filterSettings: FilterSettingsModel = { type: 'Menu' };
+  
+  public commands: CommandModel[] = [
+    { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
+    { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } },
+    { type: 'Save', buttonOption: { iconCss: 'e-icons e-update', cssClass: 'e-flat' } },
+    { type: 'Cancel', buttonOption: { iconCss: 'e-icons e-cancel-icon', cssClass: 'e-flat' } }
   ];
 
-  columns: TableColumn[] = [
-    { field: 'edit', headerText: 'Edit', width: 100, textAlign: 'Center' },
-    { field: 'delete', headerText: 'Delete', width: 100, textAlign: 'Center' },
-    { field: 'name', headerText: 'Department Name', width: 250 },
-    { field: 'code', headerText: 'Dept Code', width: 120 },
-    { field: 'head', headerText: 'Dept Head', width: 150 },
-    { field: 'status', headerText: 'Status', width: 100 }
-  ];
+  public namerules = { required: true };
+  public coderules = { required: true };
 
-  ngOnInit(): void {}
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.getDepartments();
+  }
+
+  getDepartments() {
+    this.http.get<any[]>(`${this.apiUrl}/DepartmentDetails`, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          this.departments = res;
+        },
+        error: (err) => {
+          console.error('Error fetching departments:', err);
+        }
+      });
+  }
+
+  actionComplete(args: any): void {
+    if (args.requestType === 'save') {
+      if (args.action === 'add') {
+        this.insertDepartment(args.data);
+      } else if (args.action === 'edit') {
+        this.updateDepartment(args.data);
+      }
+    } else if (args.requestType === 'delete') {
+      this.deleteDepartment(args.data[0]);
+    }
+  }
+
+  insertDepartment(data: any) {
+    this.http.post(`${this.apiUrl}/InsertDepartment`, data, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          alert('Department Inserted Successfully');
+          this.getDepartments();
+        },
+        error: (err) => {
+          console.error('Insert Failed:', err);
+          alert('Insert Failed');
+        }
+      });
+  }
+
+  updateDepartment(data: any) {
+    this.http.put(`${this.apiUrl}/UpdateDepartment/${data.DepartmentCode}`, data, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          alert('Updated Successfully');
+          this.getDepartments();
+        },
+        error: (err) => {
+          console.error('Update Failed:', err);
+          alert('Update Failed');
+        }
+      });
+  }
+
+  deleteDepartment(data: any) {
+    this.http.delete(`${this.apiUrl}/DeleteDepartment/${data.DepartmentCode}`, { headers: this.headers })
+      .subscribe({
+        next: (res) => {
+          alert('Deleted Successfully');
+          this.getDepartments();
+        },
+        error: (err) => {
+          console.error('Delete Failed:', err);
+          alert('Delete Failed');
+        }
+      });
+  }
+
+  addRecord() {
+    if (this.grid) {
+      this.grid.addRecord();
+    }
+  }
 }
