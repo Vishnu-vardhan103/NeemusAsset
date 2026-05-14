@@ -15,7 +15,14 @@ import {
   EditSettingsModel,
   CommandModel,
   PageSettingsModel,
-  FilterSettingsModel
+  FilterSettingsModel,
+  ExcelExportService,
+  PdfExportService,
+  RowDDService,
+  GroupService,
+  ColumnChooserService,
+  ResizeService,
+  ReorderService
 } from '@syncfusion/ej2-angular-grids';
 
 @Component({
@@ -28,7 +35,14 @@ import {
     CommandColumnService,
     PageService,
     SortService,
-    FilterService
+    FilterService,
+    ExcelExportService,
+    PdfExportService,
+    RowDDService,
+    GroupService,
+    ColumnChooserService,
+    ResizeService,
+    ReorderService
   ],
   templateUrl: './view-departments.component.html',
   styleUrls: ['./view-departments.component.css']
@@ -49,8 +63,9 @@ export class ViewDepartmentsComponent implements OnInit {
   };
   
   public pageSettings: PageSettingsModel = { pageSize: 10, pageSizes: true };
-  public toolbar: string[] = ['Search'];
-  public filterSettings: FilterSettingsModel = { type: 'Menu' };
+  public toolbar: string[] = ['Add', 'Search', 'ExcelExport', 'PdfExport', 'ColumnChooser'];
+  public filterSettings: FilterSettingsModel = { type: 'Excel' };
+  public groupSettings: any = { showGroupedColumn: true };
   
   public commands: CommandModel[] = [
     { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
@@ -137,6 +152,14 @@ export class ViewDepartmentsComponent implements OnInit {
   addRecord() {
     if (this.grid) {
       this.grid.addRecord();
+    }
+  }
+
+  toolbarClick(args: any): void {
+    if (args.item.id.includes('excelexport')) {
+      this.grid.excelExport();
+    } else if (args.item.id.includes('pdfexport')) {
+      this.grid.pdfExport();
     }
   }
 }

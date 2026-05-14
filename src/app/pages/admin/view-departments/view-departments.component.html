@@ -7,14 +7,15 @@
                 <h2 class="text-xl font-bold text-slate-800">Department Details</h2>
                 <p class="text-sm text-slate-500">Manage organizational departments and their details</p>
             </div>
-            <button ejs-button cssClass="e-success" iconCss="e-icons e-add" (click)="addRecord()">
-                Add Department
-            </button>
+          
         </div>
 
         <div class="p-4">
-            <ejs-grid #grid [dataSource]='departments' allowPaging='true' [pageSettings]='pageSettings'
+            <ejs-grid #grid id="deptGrid" [dataSource]='departments' allowPaging='true' [pageSettings]='pageSettings'
                 [editSettings]='editSettings' [toolbar]="toolbar" [allowSorting]='true' [allowFiltering]='true'
+                [allowExcelExport]="true" [allowPdfExport]="true" (toolbarClick)="toolbarClick($event)"
+                [allowRowDragAndDrop]="true" [allowGrouping]="true" [groupSettings]="groupSettings"
+                [showColumnChooser]="true" [allowResizing]="true" [allowReordering]="true"
                 [filterSettings]='filterSettings' (actionComplete)="actionComplete($event)" gridLines="Horizontal"
                 class="border-none">
                 <e-columns>
@@ -22,8 +23,18 @@
                         isPrimaryKey='true' [validationRules]='coderules'></e-column>
                     <e-column field='DepartmentName' headerText='Department Name' width='250'
                         [validationRules]='namerules'></e-column>
-                    <e-column field='DepartmentStatus' headerText='Status' width='120'></e-column>
-                    <e-column headerText='Manage Records' width='160' [commands]='commands'></e-column>
+                    <e-column field='DepartmentStatus' headerText='Status' width='150' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold"
+                                [ngClass]="{
+                                    'bg-emerald-100 text-emerald-700': data.DepartmentStatus === 'Active',
+                                    'bg-rose-100 text-rose-700': data.DepartmentStatus !== 'Active'
+                                }">
+                                {{ data.DepartmentStatus }}
+                            </span>
+                        </ng-template>
+                    </e-column>
+                    <e-column headerText='Manage Records' width='160' [commands]='commands' [allowFiltering]="false" [allowSorting]="false" [allowGrouping]="false"></e-column>
                 </e-columns>
             </ejs-grid>
         </div>
