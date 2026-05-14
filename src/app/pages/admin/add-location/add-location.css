@@ -1,124 +1,54 @@
-.location-dialog {
-    width: 900px;
-    margin: 40px auto;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+:host {
+  display: block;
+  background-color: #f8fafc;
+  min-height: 100vh;
 }
 
-.dialog-header {
-    padding: 25px;
-    font-size: 30px;
-    font-weight: 600;
-    border-bottom: 1px solid #ddd;
+/* 
+   Style the Syncfusion Grid Toolbar 'Add' Button
+   Targeting by Grid ID + _add which is the most reliable Syncfusion selector
+*/
+::ng-deep #locGrid_add,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add {
+    background-color: #10b981 !important; /* emerald-500 */
+    border-radius: 6px !important;
+    margin-right: 10px !important;
+    overflow: hidden !important;
 }
 
-.dialog-body {
-    padding: 30px;
+::ng-deep #locGrid_add .e-tbar-btn,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add .e-tbar-btn {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    padding: 2px 12px !important;
+    transition: all 0.2s ease !important;
 }
 
-.form-row {
-    display: flex;
-    gap: 30px;
-    margin-bottom: 30px;
+::ng-deep #locGrid_add:hover,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add:hover {
+    background-color: #059669 !important; /* emerald-600 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
-.form-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+::ng-deep #locGrid_add .e-tbar-btn-text,
+::ng-deep #locGrid_add .e-icons,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add .e-icons {
+    color: white !important;
 }
 
-.form-group label {
-    margin-bottom: 10px;
-    color: #666;
-    font-size: 15px;
-}
-
-.form-control {
-    padding: 12px;
-    border: none;
-    border-bottom: 2px solid #ccc;
-    outline: none;
-    font-size: 16px;
-    background: #fafafa;
-}
-
-.form-control:focus {
-    border-bottom: 2px solid #2196f3;
-    background: #fff;
-}
-
-.dialog-footer {
-    padding: 20px 30px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 20px;
-}
-
-.save-btn,
-.cancel-btn {
-    border: none;
-    background: transparent;
-    font-size: 18px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.save-btn {
-    color: #2196f3;
-}
-
-.cancel-btn {
-    color: #666;
-}
-::ng-deep .e-grid {
-    background: #f5f5f5 !important;
-    border: 1px solid #dcdcdc !important;
-    border-radius: 4px;
-    font-family: Roboto, sans-serif;
-}
-
-/* Toolbar */
+/* Toolbar overall styling */
 ::ng-deep .e-grid .e-toolbar {
-    background: #efefef !important;
-    border-bottom: 1px solid #d6d6d6 !important;
-    padding: 6px;
-}
-
-/* Toolbar Buttons */
-::ng-deep .e-toolbar .e-tbar-btn {
     background: transparent !important;
-    color: #374151 !important;
-    border-radius: 5px !important;
-    font-size: 14px;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 8px !important;
 }
 
-/* Header */
-::ng-deep .e-grid .e-headercell {
-    background: #f1f1f1 !important;
-    color: #111827 !important;
-    font-weight: 600 !important;
-    border-color: #d1d5db !important;
-    font-size: 15px;
+/* Export Buttons Styling */
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-excelexport .e-icons {
+    color: #059669 !important;
 }
 
-/* Rows */
-::ng-deep .e-grid .e-rowcell {
-    background: #ffffff !important;
-    border-color: #e5e7eb !important;
-    padding: 14px 10px !important;
-    font-size: 14px;
-}
-
-/* Hover */
-::ng-deep .e-grid .e-row:hover .e-rowcell {
-    background: #f3f4f6 !important;
-}
-
-/* Grid content */
-::ng-deep .e-gridcontent {
-    background: #fafafa !important;
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-pdfexport .e-icons {
+    color: #dc2626 !important;
 }

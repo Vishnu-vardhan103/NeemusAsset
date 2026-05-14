@@ -1,232 +1,169 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
-import { CommonCardComponent } from '../../../shared/components/common-card/common-card.component';
-import { BASE_URL } from '../../../core/Constant/apiConstant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
+import { Router } from '@angular/router';
+import { BASE_URL } from '../../../core/Constant/apiConstant';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { 
+  GridModule, 
+  GridComponent,
+  EditService, 
+  ToolbarService, 
+  CommandColumnService, 
+  PageService, 
+  SortService, 
+  FilterService,
   EditSettingsModel,
-  ToolbarItems,
-  PageService,
-  EditService,
-  ToolbarService,
-  Search
+  CommandModel,
+  PageSettingsModel,
+  FilterSettingsModel,
+  ExcelExportService,
+  PdfExportService,
+  RowDDService,
+  GroupService,
+  ColumnChooserService,
+  ResizeService,
+  ReorderService
 } from '@syncfusion/ej2-angular-grids';
-import { GridModule } from '@syncfusion/ej2-angular-grids';
+
 const URL = BASE_URL;
 const headers = new HttpHeaders();
+
 @Component({
   selector: 'app-add-location',
   standalone: true,
-  // imports: [
-  //   CommonModule,
-  //   FormsModule,
-  //   MatFormFieldModule,
-  //   MatInputModule,
-  //   MatIconModule,
-  //   CommonCardComponent
-  // ],
   imports: [
     CommonModule,
-    GridModule
+    FormsModule,
+    GridModule,
+    ButtonModule
   ],
-
   providers: [
-    PageService,
     EditService,
-    ToolbarService
+    ToolbarService,
+    CommandColumnService,
+    PageService,
+    SortService,
+    FilterService,
+    ExcelExportService,
+    PdfExportService,
+    RowDDService,
+    GroupService,
+    ColumnChooserService,
+    ResizeService,
+    ReorderService
   ],
-  templateUrl: './add-location.component.html'
+  templateUrl: './add-location.component.html',
+  styleUrls: ['./add-location.css']
 })
-export class AddLocationComponent {
+export class AddLocationComponent implements OnInit {
+  @ViewChild('grid') public grid!: GridComponent;
   public locationData: any[] = [];
 
-  // TOOLBAR
-  public toolbarOptions: ToolbarItems[] = [
-    'Add',
-   'Search'
-  ];
-
-  // GRID EDIT SETTINGS
   public editSettings: EditSettingsModel = {
     allowAdding: true,
     allowEditing: true,
     allowDeleting: true,
-    mode: 'Dialog'
+    mode: 'Dialog',
+    showDeleteConfirmDialog: true
   };
-//  locationData = {
-//    LocationID:0,
-//     Location: '',
-//     LocationCode: '',
-//     Block: '',
-//     DepartmentCode: '',
-//     Status: ''
-//   };
-//    locationList: any;
-  constructor( private router: Router, private http: HttpClient) {
-    //this.getLocations();
-     this.getLocations();
-     
-  }
-  // GET DATA
-  getLocations() {
 
+  public pageSettings: PageSettingsModel = { pageSize: 10, pageSizes: true };
+  public toolbar: string[] = ['Add', 'Search', 'ExcelExport', 'PdfExport', 'ColumnChooser'];
+  public filterSettings: FilterSettingsModel = { type: 'Excel' };
+  public groupSettings: any = { showGroupedColumn: true };
+
+  public commands: CommandModel[] = [
+    { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
+    { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } },
+    { type: 'Save', buttonOption: { iconCss: 'e-icons e-update', cssClass: 'e-flat' } },
+    { type: 'Cancel', buttonOption: { iconCss: 'e-icons e-cancel-icon', cssClass: 'e-flat' } }
+  ];
+
+  constructor(private router: Router, private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.getLocations();
+  }
+
+  getLocations() {
     this.http.get<any[]>(URL + '/LocationDetails', { headers })
       .subscribe({
-
         next: (res) => {
-
-          console.log(res);
-
           this.locationData = res;
         },
-
         error: (err) => {
-
-          console.log(err);
+          console.error('Error fetching locations:', err);
         }
-
       });
   }
 
-  //Save 
   actionComplete(args: any): void {
-
-  if (args.requestType === 'save' && args.action === 'add') {
-
-    console.log(args.data);
-
-    this.saveLocation(args.data);
-
+    if (args.requestType === 'save') {
+      if (args.action === 'add') {
+        this.saveLocation(args.data);
+      } else if (args.action === 'edit') {
+        this.updateLocation(args.data);
+      }
+    } else if (args.requestType === 'delete') {
+      this.deleteLocation(args.data[0]);
+    }
   }
-   // EDIT
-  if (args.requestType === 'save' && args.action === 'edit') {
 
-    console.log(args.data);
-
-    this.updateLocation(args.data);
-  }
- if (args.requestType === 'delete') {
-
-    this.deleteLocation(args.data[0]);
-  }
-}
   saveLocation(data: any) {
-
-  this.http.post( URL + '/InsertLocation', data, { headers }
-    ).subscribe({
-    next: (res) => {
-      console.log(res);
-      alert('Inserted Successfully');
-      this.getLocations();
-    },
-    error: (err) => {
-      console.log(err);
-      alert('Insert Failed');
-    }
-  });
-}
-updateLocation(data: any) {
-  this.http.put( URL + '/UpdateLocation',data,{ headers }
-  ).subscribe({
-    next: (res) => {
-      console.log(res);
-      alert('Updated Successfully');
-      this.getLocations();
-    },
-    error: (err) => {
-      console.log(err);
-      alert('Update Failed');
-    }
-  });
-}
-deleteLocation(data: any) {
-
-  this.http.delete(URL + '/DeleteLocation/' + data.LocationID,{ headers }
-  ).subscribe({
-    next: (res) => {
-      console.log(res);
-      alert('Deleted Successfully');
-      this.getLocations();
-    },
-    error: (err) => {
-      console.log(err);
-      alert('Delete Failed');
-    }
-  });
-}
- public commands: any[] = [
-  {
-    type: 'Edit',
-    buttonOption: { iconCss: 'e-icons e-edit', cssClass: 'e-flat' }
-  },
-  {
-    type: 'Delete',
-    buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' }
+    this.http.post(URL + '/InsertLocation', data, { headers })
+      .subscribe({
+        next: () => {
+          alert('Inserted Successfully');
+          this.getLocations();
+        },
+        error: (err) => {
+          console.error('Insert Failed:', err);
+          alert('Insert Failed');
+        }
+      });
   }
-];
-//   getLocations() {
 
-//     this.http.get(URL + '/TestController/ViewDetails', { headers })
-//       .subscribe(res => {
+  updateLocation(data: any) {
+    this.http.put(URL + '/UpdateLocation', data, { headers })
+      .subscribe({
+        next: () => {
+          alert('Updated Successfully');
+          this.getLocations();
+        },
+        error: (err) => {
+          console.error('Update Failed:', err);
+          alert('Update Failed');
+        }
+      });
+  }
 
-//         this.locationList = res;
+  deleteLocation(data: any) {
+    this.http.delete(URL + '/DeleteLocation/' + data.LocationID, { headers })
+      .subscribe({
+        next: () => {
+          alert('Deleted Successfully');
+          this.getLocations();
+        },
+        error: (err) => {
+          console.error('Delete Failed:', err);
+          alert('Delete Failed');
+        }
+      });
+  }
 
-//         console.log(this.locationList);
+  addRecord() {
+    if (this.grid) {
+      this.grid.addRecord();
+    }
+  }
 
-//       }, err => {
-
-//         console.log(err);
-
-//       });
-//   }
-
-//   saveLocation() {
-//    console.log(this.locationData)
-//     this.http.post(
-//   URL + '/Location/InsertLocation',
-//   this.locationData,
-//   { headers }
-// )
-    
-//     .subscribe({
-//       next: (res) => {
-//         console.log(res);
-//         alert('Saved Successfully');
-//         this.locationData = {
-//           LocationID:0,
-//           Location: '',
-//           LocationCode: '',
-//           Block: '',
-//           DepartmentCode: '',
-//           Status:''
-//         };
-//       },
-//      error: (err) => {
-
-//   console.log('FULL ERROR', err);
-
-//   alert(err.error);
-
-// }
-//     });
-  
-
-//   // saveLocation() {
-//   //   if (this.locationData.location && this.locationData.block && this.locationData.code) {
-//   //     console.log('Saving location:', this.locationData);
-//   //     alert('Location added successfully!');
-//   //     this.locationData = { location: '', block: '', code: '' };
-//   //     // Navigate to View Locations
-//   //     this.router.navigate(['/admin/view-locations']);
-//   //   } else {
-//   //     alert('Please fill in all required fields.');
-//   //   }
-//   // }
-// }
+  toolbarClick(args: any): void {
+    if (args.item.id.includes('excelexport')) {
+      this.grid.excelExport();
+    } else if (args.item.id.includes('pdfexport')) {
+      this.grid.pdfExport();
+    }
+  }
 }
-

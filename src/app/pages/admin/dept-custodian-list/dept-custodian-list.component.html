@@ -1,30 +1,64 @@
 <div class="p-6 bg-slate-50 min-h-screen">
-  <!-- Selection Header -->
-  <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6">
-    <h2 class="text-xl font-bold text-slate-800 mb-4">Department Wise Custodians List</h2>
-    
-    <div class="flex items-center gap-4">
-      <mat-form-field appearance="outline" class="w-80">
-        <mat-label>Select Department</mat-label>
-        <mat-select [(ngModel)]="selectedDept">
-          <mat-option *ngFor="let dept of departments" [value]="dept.value">
-            {{dept.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <!-- Selection Header -->
+    <div class="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-slate-200 mb-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Department Wise Custodians List</h2>
+        
+        <div class="flex items-center gap-4">
+            <mat-form-field appearance="outline" class="w-80">
+                <mat-label>Select Department</mat-label>
+                <mat-select [(ngModel)]="selectedDept">
+                    <mat-option *ngFor="let dept of departments" [value]="dept.value">
+                        {{dept.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
-      <button mat-mini-fab color="primary" class="shadow-lg shadow-indigo-200" (click)="onSearch()">
-        <mat-icon>search</mat-icon>
-      </button>
+            <button mat-mini-fab color="primary" class="shadow-lg shadow-indigo-200" (click)="onSearch()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
     </div>
-  </div>
 
-  <!-- Syncfusion Grid -->
-  <app-data-table 
-    [title]="'Custodians Records'" 
-    [data]="filteredData" 
-    [columns]="columns" 
-    [allowGrouping]="true"
-    [pageSize]="10">
-  </app-data-table>
+    <!-- Premium Grid Container -->
+    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+        <!-- Grid Header -->
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white">
+            <div>
+                <h2 class="text-xl font-bold text-slate-800">Custodian Records</h2>
+                <p class="text-sm text-slate-500">Manage custodians assigned to organizational departments</p>
+            </div>
+            <!-- <button ejs-button cssClass="e-success" iconCss="e-icons e-add" (click)="addRecord()">
+                Add Custodian
+            </button> -->
+        </div>
+
+        <div class="p-4">
+            <ejs-grid #grid id="custGrid" [dataSource]='filteredData' allowPaging='true' [pageSettings]='pageSettings'
+                [editSettings]='editSettings' [toolbar]="toolbar" [allowSorting]='true' [allowFiltering]='true'
+                [allowExcelExport]="true" [allowPdfExport]="true" (toolbarClick)="toolbarClick($event)"
+                [allowRowDragAndDrop]="true" [allowGrouping]="true" [groupSettings]="groupSettings"
+                [showColumnChooser]="true" [allowResizing]="true" [allowReordering]="true"
+                [filterSettings]='filterSettings' (actionComplete)="actionComplete($event)" gridLines="Horizontal"
+                class="border-none">
+                <e-columns>
+                    <e-column field='id' headerText='Custodian ID' width='150' isPrimaryKey='true' textAlign='Right'></e-column>
+                    <e-column field='name' headerText='Custodian Name' width='250'></e-column>
+                    <e-column field='dept' headerText='Department' width='200'></e-column>
+                    <e-column field='designation' headerText='Designation' width='200'></e-column>
+                    <e-column field='status' headerText='Status' width='150' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold"
+                                [ngClass]="{
+                                    'bg-emerald-100 text-emerald-700': data.status === 'Active',
+                                    'bg-rose-100 text-rose-700': data.status !== 'Active'
+                                }">
+                                {{ data.status }}
+                            </span>
+                        </ng-template>
+                    </e-column>
+                    <e-column headerText='Manage Records' width='160' [commands]='commands' [allowFiltering]="false" [allowSorting]="false" [allowGrouping]="false"></e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
 </div>

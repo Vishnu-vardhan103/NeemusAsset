@@ -1,11 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { DataTableComponent, TableColumn } from '../../../shared/components/data-table/data-table.component';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { 
+  GridModule, 
+  GridComponent,
+  EditService, 
+  ToolbarService, 
+  CommandColumnService, 
+  PageService, 
+  SortService, 
+  FilterService,
+  EditSettingsModel,
+  CommandModel,
+  PageSettingsModel,
+  FilterSettingsModel,
+  ExcelExportService,
+  PdfExportService,
+  RowDDService,
+  GroupService,
+  ColumnChooserService,
+  ResizeService,
+  ReorderService
+} from '@syncfusion/ej2-angular-grids';
 
 @Component({
   selector: 'app-dept-custodian-list',
@@ -17,12 +38,29 @@ import { DataTableComponent, TableColumn } from '../../../shared/components/data
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
-    DataTableComponent
+    GridModule,
+    ButtonModule
+  ],
+  providers: [
+    EditService,
+    ToolbarService,
+    CommandColumnService,
+    PageService,
+    SortService,
+    FilterService,
+    ExcelExportService,
+    PdfExportService,
+    RowDDService,
+    GroupService,
+    ColumnChooserService,
+    ResizeService,
+    ReorderService
   ],
   templateUrl: './dept-custodian-list.component.html',
   styleUrls: ['./dept-custodian-list.component.css']
 })
 export class DeptCustodianListComponent implements OnInit {
+  @ViewChild('grid') public grid!: GridComponent;
   selectedDept: string = '';
   
   departments = [
@@ -33,23 +71,34 @@ export class DeptCustodianListComponent implements OnInit {
   ];
 
   allCustodians = [
-    { id: '150320', name: 'Ashok Kumar Sharma', dept: 'Operations', designation: 'Process Operator' },
-    { id: '100415', name: 'Gaurab Das', dept: 'Human Resources', designation: 'SM(HR)' },
-    { id: '150395', name: 'Gauri Duarah', dept: 'Information Technology', designation: 'Technician' },
-    { id: '150303', name: 'Bhupen Chetia', dept: 'Operations', designation: 'Process Operator' },
-    { id: '100676', name: 'Ashok Kumar Boruah', dept: 'Projects', designation: 'CM(PROJECT)' },
-    { id: '100358', name: 'Krishna Kt Dutta', dept: 'Operations', designation: 'CM(OPNS)' }
+    { id: '150320', name: 'Ashok Kumar Sharma', dept: 'Operations', designation: 'Process Operator', status: 'Active' },
+    { id: '100415', name: 'Gaurab Das', dept: 'Human Resources', designation: 'SM(HR)', status: 'Active' },
+    { id: '150395', name: 'Gauri Duarah', dept: 'Information Technology', designation: 'Technician', status: 'Inactive' },
+    { id: '150303', name: 'Bhupen Chetia', dept: 'Operations', designation: 'Process Operator', status: 'Active' },
+    { id: '100676', name: 'Ashok Kumar Boruah', dept: 'Projects', designation: 'CM(PROJECT)', status: 'Active' },
+    { id: '100358', name: 'Krishna Kt Dutta', dept: 'Operations', designation: 'CM(OPNS)', status: 'Active' }
   ];
 
   filteredData: any[] = [];
 
-  columns: TableColumn[] = [
-    { field: 'edit', headerText: 'Edit', width: 100, textAlign: 'Center' },
-    { field: 'delete', headerText: 'Delete', width: 100, textAlign: 'Center' },
-    { field: 'id', headerText: 'Custodian ID', width: 150 },
-    { field: 'name', headerText: 'Custodian Name', width: 250 },
-    { field: 'dept', headerText: 'Department Name', width: 200 },
-    { field: 'designation', headerText: 'Designation', width: 200 }
+  public editSettings: EditSettingsModel = { 
+    allowAdding: true,
+    allowEditing: true, 
+    allowDeleting: true, 
+    mode: 'Dialog',
+    showDeleteConfirmDialog: true
+  };
+  
+  public pageSettings: PageSettingsModel = { pageSize: 10, pageSizes: true };
+  public toolbar: string[] = ['Add', 'Search', 'ExcelExport', 'PdfExport', 'ColumnChooser'];
+  public filterSettings: FilterSettingsModel = { type: 'Excel' };
+  public groupSettings: any = { showGroupedColumn: true };
+  
+  public commands: CommandModel[] = [
+    { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
+    { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } },
+    { type: 'Save', buttonOption: { iconCss: 'e-icons e-update', cssClass: 'e-flat' } },
+    { type: 'Cancel', buttonOption: { iconCss: 'e-icons e-cancel-icon', cssClass: 'e-flat' } }
   ];
 
   ngOnInit(): void {
@@ -63,6 +112,32 @@ export class DeptCustodianListComponent implements OnInit {
       this.filteredData = this.allCustodians.filter(c => c.dept === deptName);
     } else {
       this.filteredData = this.allCustodians;
+    }
+  }
+
+  actionComplete(args: any): void {
+    if (args.requestType === 'save') {
+      if (args.action === 'add') {
+        alert('Add action triggered');
+      } else if (args.action === 'edit') {
+        alert('Edit action triggered');
+      }
+    } else if (args.requestType === 'delete') {
+      alert('Delete action triggered');
+    }
+  }
+
+  addRecord() {
+    if (this.grid) {
+      this.grid.addRecord();
+    }
+  }
+
+  toolbarClick(args: any): void {
+    if (args.item.id.includes('excelexport')) {
+      this.grid.excelExport();
+    } else if (args.item.id.includes('pdfexport')) {
+      this.grid.pdfExport();
     }
   }
 }

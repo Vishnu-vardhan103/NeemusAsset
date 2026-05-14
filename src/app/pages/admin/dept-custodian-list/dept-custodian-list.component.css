@@ -1,13 +1,57 @@
-::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  display: none;
+:host {
+  display: block;
 }
 
-::ng-deep .mat-mdc-text-field-wrapper {
-  background-color: #ffffff !important;
-  border-radius: 12px !important;
-  transition: all 0.3s ease;
+/* 
+   Style the Syncfusion Grid Toolbar 'Add' Button
+   Targeting by Grid ID + _add which is the most reliable Syncfusion selector
+*/
+::ng-deep #custGrid_add,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add {
+    background-color: #10b981 !important; /* emerald-500 */
+    border-radius: 6px !important;
+    margin-right: 10px !important;
+    overflow: hidden !important;
 }
 
-::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+::ng-deep #custGrid_add .e-tbar-btn,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add .e-tbar-btn {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    padding: 2px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+::ng-deep #custGrid_add:hover,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add:hover {
+    background-color: #059669 !important; /* emerald-600 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+::ng-deep #custGrid_add .e-tbar-btn-text,
+::ng-deep #custGrid_add .e-icons,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add .e-icons {
+    color: white !important;
+}
+
+/* Toolbar overall styling */
+::ng-deep .e-grid .e-toolbar {
+    background: transparent !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 8px !important;
+}
+
+/* Export Buttons Styling */
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-excelexport .e-icons {
+    color: #059669 !important;
+}
+
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-pdfexport .e-icons {
+    color: #dc2626 !important;
+}
+
+/* Mat Form Field Overrides for Glassmorphism */
+::ng-deep .mat-mdc-form-field-focus-indicator {
+    border-radius: 8px !important;
 }

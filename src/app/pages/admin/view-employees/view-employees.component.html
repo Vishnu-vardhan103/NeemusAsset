@@ -1,9 +1,45 @@
 <div class="p-6">
-  <app-data-table 
-    [title]="'Employee Details'" 
-    [data]="employees" 
-    [columns]="columns" 
-    [allowGrouping]="true"
-    [pageSize]="10">
-  </app-data-table>
+    <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-xl border border-slate-200 overflow-hidden">
+        <!-- Header -->
+        <div
+            class="p-6 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white">
+            <div>
+                <h2 class="text-xl font-bold text-slate-800">Employee Details</h2>
+                <p class="text-sm text-slate-500">Manage organization employees and their details</p>
+            </div>
+            <!-- <button ejs-button cssClass="e-success" iconCss="e-icons e-add" (click)="addRecord()">
+                Add Employee
+            </button> -->
+        </div>
+
+        <div class="p-4">
+            <ejs-grid #grid id="empGrid" [dataSource]='employees' allowPaging='true' [pageSettings]='pageSettings'
+                [editSettings]='editSettings' [toolbar]="toolbar" [allowSorting]='true' [allowFiltering]='true'
+                [allowExcelExport]="true" [allowPdfExport]="true" (toolbarClick)="toolbarClick($event)"
+                [allowRowDragAndDrop]="true" [allowGrouping]="true" [groupSettings]="groupSettings"
+                [showColumnChooser]="true" [allowResizing]="true" [allowReordering]="true"
+                [filterSettings]='filterSettings' (actionComplete)="actionComplete($event)" gridLines="Horizontal"
+                class="border-none">
+                <e-columns>
+                    <e-column field='id' headerText='Employee ID' width='120' isPrimaryKey='true' textAlign='Right'></e-column>
+                    <e-column field='name' headerText='Custodian Name' width='200'></e-column>
+                    <e-column field='designation' headerText='Designation' width='180'></e-column>
+                    <e-column field='reporting' headerText='Reporting Authority' width='150'></e-column>
+                    <e-column field='email' headerText='Email' width='220'></e-column>
+                    <e-column field='status' headerText='Status' width='150' textAlign='Center'>
+                        <ng-template #template let-data>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold"
+                                [ngClass]="{
+                                    'bg-emerald-100 text-emerald-700': data.status === 'Active',
+                                    'bg-rose-100 text-rose-700': data.status !== 'Active'
+                                }">
+                                {{ data.status }}
+                            </span>
+                        </ng-template>
+                    </e-column>
+                    <e-column headerText='Manage Records' width='160' [commands]='commands' [allowFiltering]="false" [allowSorting]="false" [allowGrouping]="false"></e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+    </div>
 </div>
