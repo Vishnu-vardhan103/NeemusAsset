@@ -52,3 +52,12 @@
 ::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-pdfexport .e-icons {
     color: #dc2626 !important;
 }
+
+.e-dialog {
+    width: 500px !important;
+    max-width: 500px !important;
+}
+
+.e-dialog-content {
+    height: 5000px !important;
+}

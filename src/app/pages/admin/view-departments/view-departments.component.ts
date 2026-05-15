@@ -24,7 +24,9 @@ import {
   ResizeService,
   ReorderService
 } from '@syncfusion/ej2-angular-grids';
-
+import { Router } from '@angular/router';
+const URL = BASE_URL;
+const headers = new HttpHeaders();
 @Component({
   selector: 'app-view-departments',
   standalone: true,
@@ -46,11 +48,12 @@ import {
   ],
   templateUrl: './view-departments.component.html',
   styleUrls: ['./view-departments.component.css']
+  
 })
 export class ViewDepartmentsComponent implements OnInit {
   @ViewChild('grid') public grid!: GridComponent;
-  
-  public departments: any[] = [];
+  public locationData: any[] = [];
+    public departments: any[]=[];
   private apiUrl = BASE_URL;
   private headers = new HttpHeaders();
 
@@ -77,28 +80,92 @@ export class ViewDepartmentsComponent implements OnInit {
   public namerules = { required: true };
   public coderules = { required: true };
 
-  constructor(private http: HttpClient) {}
-
-  ngOnInit(): void {
-    this.getDepartments();
+ constructor(private router: Router,private http: HttpClient) {
+    //this.GetDepartments();
   }
 
-  getDepartments() {
-    this.http.get<any[]>(`${this.apiUrl}/DepartmentDetails`, { headers: this.headers })
+  ngOnInit(): void {
+    this.GetDepartments();
+    
+    // this.http.get<any[]>(URL + '/DepartmentDetails', { headers })
+    //   .subscribe({
+    //     next: (res) => {
+    //       console.log(res);
+    //       this.departments = res;
+    //       if (this.grid) {
+    //       this.grid.refresh();
+    //     }
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //     }
+    //   });
+  }
+public serialNumber = (field: string, data: any, column: any) => {
+  return this.departments.indexOf(data) + 1;
+}
+  GetDepartments() {
+     this.http.get<any[]>(URL + '/DepartmentDetails', { headers })
       .subscribe({
         next: (res) => {
+          console.log(res);
           this.departments = res;
+          if (this.grid) {
+          this.grid.refresh();
+        }
         },
         error: (err) => {
-          console.error('Error fetching departments:', err);
+          console.log(err);
         }
       });
   }
+ saveDepartment(data: any) {
+  this.http.post( URL + '/InsertDepartments', data, { headers }
+    ).subscribe({
+    next: (res) => {
+      console.log(res);
+      alert('Inserted Successfully');
+      this.GetDepartments();
+    },
+    error: (err) => {
+      console.log(err);
+      alert('Insert Failed');
+    }
+  });
+}
+updateDepartment(data: any) {
+  this.http.put( URL + '/UpdateDepartments',data,{ headers }
+  ).subscribe({
+    next: (res) => {
+      console.log(res);
+      alert('Updated Successfully');
+      this.GetDepartments();
+    },
+    error: (err) => {
+      console.log(err);
+      alert('Update Failed');
+    }
+  });
+}
 
+deleteDepartment(data: any) {
+  this.http.delete(URL + '/DeleteDepartment/' + data.departmentID,{ headers }
+  ).subscribe({
+    next: (res) => {
+      console.log(res);
+      alert('Deleted Successfully');
+      this.GetDepartments();
+    },
+    error: (err) => {
+      console.log(err);
+      alert('Delete Failed');
+    }
+  });
+}
   actionComplete(args: any): void {
     if (args.requestType === 'save') {
       if (args.action === 'add') {
-        this.insertDepartment(args.data);
+        this.saveDepartment(args.data);
       } else if (args.action === 'edit') {
         this.updateDepartment(args.data);
       }
@@ -107,47 +174,7 @@ export class ViewDepartmentsComponent implements OnInit {
     }
   }
 
-  insertDepartment(data: any) {
-    this.http.post(`${this.apiUrl}/InsertDepartment`, data, { headers: this.headers })
-      .subscribe({
-        next: (res) => {
-          alert('Department Inserted Successfully');
-          this.getDepartments();
-        },
-        error: (err) => {
-          console.error('Insert Failed:', err);
-          alert('Insert Failed');
-        }
-      });
-  }
 
-  updateDepartment(data: any) {
-    this.http.put(`${this.apiUrl}/UpdateDepartment/${data.DepartmentCode}`, data, { headers: this.headers })
-      .subscribe({
-        next: (res) => {
-          alert('Updated Successfully');
-          this.getDepartments();
-        },
-        error: (err) => {
-          console.error('Update Failed:', err);
-          alert('Update Failed');
-        }
-      });
-  }
-
-  deleteDepartment(data: any) {
-    this.http.delete(`${this.apiUrl}/DeleteDepartment/${data.DepartmentCode}`, { headers: this.headers })
-      .subscribe({
-        next: (res) => {
-          alert('Deleted Successfully');
-          this.getDepartments();
-        },
-        error: (err) => {
-          console.error('Delete Failed:', err);
-          alert('Delete Failed');
-        }
-      });
-  }
 
   addRecord() {
     if (this.grid) {

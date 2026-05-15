@@ -17,13 +17,21 @@
                 [allowRowDragAndDrop]="true" [allowGrouping]="true" [groupSettings]="groupSettings"
                 [showColumnChooser]="true" [allowResizing]="true" [allowReordering]="true"
                 [filterSettings]='filterSettings' (actionComplete)="actionComplete($event)" gridLines="Horizontal"
-                class="border-none">
+                class="border-none"  >
                 <e-columns>
-                    <e-column field='DepartmentCode' headerText='Department Code' width='150' textAlign='Right'
+                    <!-- <e-column
+    headerText="Sl No"
+    width="100"
+    textAlign="Center"
+    [valueAccessor]="serialNumber">
+</e-column> -->
+                     <e-column field='DepartmentID'  width='150' textAlign='Right' [visible]='false'
                         isPrimaryKey='true' [validationRules]='coderules'></e-column>
-                    <e-column field='DepartmentName' headerText='Department Name' width='250'
+                    <e-column field='DepartmentCode' headerText='Department Code' width='150' textAlign='Left'
+                        [validationRules]='coderules'></e-column>
+                    <e-column field='DepartmentName' headerText='Department Name' width='250' textAlign='Left'
                         [validationRules]='namerules'></e-column>
-                    <e-column field='DepartmentStatus' headerText='Status' width='150' textAlign='Center'>
+                    <e-column field='DepartmentStatus' headerText='Status' width='150' textAlign='Left' [visible]='false'>
                         <ng-template #template let-data>
                             <span class="px-3 py-1 rounded-full text-xs font-bold"
                                 [ngClass]="{
