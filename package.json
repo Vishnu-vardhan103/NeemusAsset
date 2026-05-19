@@ -24,6 +24,7 @@
     "@syncfusion/ej2-angular-dropdowns": "^33.2.3",
     "@syncfusion/ej2-angular-grids": "^33.2.5",
     "@syncfusion/ej2-angular-inputs": "^33.2.3",
+    "@syncfusion/ej2-angular-multicolumn-combobox": "^33.2.3",
     "@syncfusion/ej2-base": "^33.2.3",
     "@syncfusion/ej2-data": "^33.2.3",
     "@syncfusion/ej2-excel-export": "^33.2.3",

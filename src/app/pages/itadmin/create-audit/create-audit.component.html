@@ -1,57 +1,166 @@
-<div class="min-h-screen bg-slate-50 p-8 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700">
+<div class="p-6 space-y-6">
+
+  <!-- Page Header -->
+
+
   
-  <div class="w-full max-w-2xl">
-    <app-common-card
-      title="Create New Audit"
-      subtitle="Internal Asset Auditing System"
-      icon="fact_check"
-      buttonLabel="Save Audit Campaign"
-      (onAction)="onSave()">
-      
-      <div class="space-y-8 py-4">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          <div class="flex flex-col gap-2">
-            <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Location</label>
-            <select [(ngModel)]="auditModel.location" name="location" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
-              <option value="">Select Location</option>
-              <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
-            </select>
-          </div>
 
-          <div class="flex flex-col gap-2">
-            <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Audit Status</label>
-            <select [(ngModel)]="auditModel.auditStatus" name="auditStatus" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
-              <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
-            </select>
-          </div>
+  <!-- Grid Card -->
+  <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-xl border border-slate-200 overflow-hidden">
 
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Audit Name</label>
-          <input type="text" [(ngModel)]="auditModel.auditName" name="auditName" placeholder="Enter Audit Campaign Name" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900">
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label class="text-sm font-black text-slate-700 uppercase tracking-wider">Audit Description</label>
-          <textarea rows="4" [(ngModel)]="auditModel.auditDescription" name="auditDescription" placeholder="Provide detailed description of the audit scope" class="px-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-sky-100 focus:border-sky-500 outline-none transition-all font-medium text-slate-900 resize-none"></textarea>
-        </div>
-
-        <!-- Using app-button explicitly as requested -->
-        <div class="pt-2">
-          <app-button 
-            label="Initialize Audit Session" 
-            variant="primary" 
-            width="auto"
-            (btnClick)="onSave()">
-          </app-button>
-        </div>
-
+    <!-- Grid Header -->
+    <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white">
+      <div>
+        <h2 class="text-xl font-bold text-slate-800">Audits</h2>
+        <p class="text-sm text-slate-500">Manage organizational audits and their details</p>
       </div>
+    </div>
 
-    </app-common-card>
+    <!-- Grid -->
+    <div class="p-4">
+      <ejs-grid
+        #grid
+        id="auditGrid"
+        [dataSource]="audits"
+        allowPaging="true"
+        [pageSettings]="pageSettings"
+        [editSettings]="editSettings"
+        [toolbar]="toolbar"
+        [allowSorting]="true"
+        [allowFiltering]="true"
+        [allowExcelExport]="true"
+        [allowPdfExport]="true"
+        [allowRowDragAndDrop]="true"
+        [allowGrouping]="true"
+        [groupSettings]="groupSettings"
+        [showColumnChooser]="true"
+        [allowResizing]="true"
+        [allowReordering]="true"
+        [filterSettings]="filterSettings"
+        (toolbarClick)="toolbarClick($event)"
+        (actionBegin)="actionBegin($event)"
+        (actionComplete)="actionComplete($event)"
+        gridLines="Horizontal"
+        class="border-none">
+
+        <e-columns>
+
+          <!-- Audit ID (hidden primary key) -->
+          <e-column
+            field="auditID"
+            headerText="Audit ID"
+            width="150"
+            textAlign="Right"
+            [visible]="false"
+            isPrimaryKey="true"
+            [validationRules]="coderules">
+          </e-column>
+
+          <!-- Audit Name -->
+          <e-column
+            field="auditName"
+            headerText="Audit Name"
+            width="200"
+            textAlign="Left"
+            defaultValue=""
+            [validationRules]="namerules">
+          </e-column>
+
+          <!-- Audit Description -->
+          <e-column
+            field="auditDescription"
+            headerText="Audit Description"
+            width="250"
+            textAlign="Left"
+            defaultValue="">
+          </e-column>
+
+          <!-- Location Column -->
+          <e-column
+            field="locationID"
+            headerText="Location"
+            width="180"
+            textAlign="Left">
+
+            <!-- Display: show location name -->
+            <ng-template #template let-data>
+              <span>{{ getLocationName(data.locationID) }}</span>
+            </ng-template>
+
+            <!-- Edit: MultiColumnComboBox -->
+            <ng-template #editTemplate let-data>
+              <ejs-multicolumncombobox
+                id="locationID"
+                name="locationID"
+                [(ngModel)]="data.locationID"
+                (change)="onGridLocationChange($event)"
+                (valueChange)="onGridLocationChange($event)"
+                [dataSource]="activeLocationData"
+                [fields]="locationFields"
+                placeholder="Select Location"
+                popupWidth="600px"
+                [gridSettings]="{
+                  allowPaging: true,
+                  pageSettings: { pageSize: 5 },
+                  allowFiltering: true
+                }">
+                <e-columns>
+                  <e-column field="locationID"   headerText="Location ID"   width="90"></e-column>
+                  <e-column field="locationCode" headerText="Location Code" width="120"></e-column>
+                  <e-column field="block"        headerText="Block"         width="100"></e-column>
+                  <e-column field="location"     headerText="Location"      width="250"></e-column>
+                </e-columns>
+              </ejs-multicolumncombobox>
+            </ng-template>
+
+          </e-column>
+
+          <!-- Audit Status -->
+          <e-column
+            field="auditStatus"
+            headerText="Audit Status"
+            width="150"
+            textAlign="Left"
+            defaultValue="Active">
+
+            <!-- Display: colored badge -->
+            <ng-template #template let-data>
+              <span
+                class="px-3 py-1 rounded-full text-xs font-bold"
+                [ngClass]="{
+                  'bg-emerald-100 text-emerald-700': data.auditStatus === 'Active',
+                  'bg-rose-100 text-rose-700': data.auditStatus !== 'Active'
+                }">
+                {{ data.auditStatus }}
+              </span>
+            </ng-template>
+
+            <!-- Edit: DropDownList -->
+            <ng-template #editTemplate let-data>
+              <ejs-dropdownlist
+                id="auditStatus"
+                name="auditStatus"
+                [(ngModel)]="data.auditStatus"
+                [dataSource]="['Active', 'Inactive']"
+                placeholder="Select a status">
+              </ejs-dropdownlist>
+            </ng-template>
+
+          </e-column>
+
+          <!-- Action Commands -->
+          <e-column
+            headerText="Manage Records"
+            width="160"
+            [commands]="commands"
+            [allowFiltering]="false"
+            [allowSorting]="false"
+            [allowGrouping]="false">
+          </e-column>
+
+        </e-columns>
+      </ejs-grid>
+    </div>
+
   </div>
-
 </div>
