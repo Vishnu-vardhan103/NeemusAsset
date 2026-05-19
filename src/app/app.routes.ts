@@ -37,6 +37,18 @@ export const routes: Routes = [
       { path: 'hr-finance-list', loadComponent: () => import('./pages/admin/hr-finance-list/hr-finance-list.component').then(m => m.HrFinanceListComponent) },
       { path: 'add-location', loadComponent: () => import('./pages/admin/add-location/add-location.component').then(m => m.AddLocationComponent) },
       { path: 'view-locations', loadComponent: () => import('./pages/admin/view-locations/view-locations.component').then(m => m.ViewLocationsComponent) },
+      { path: 'document-master', loadComponent: () => import('./pages/admin/document-master/document-master.component').then(m => m.DocumentMasterComponent) },
+      { path: 'service-type', loadComponent: () => import('./pages/admin/service-type/service-type.component').then(m => m.ServiceTypeComponent) },
+      { path: 'asset-type', loadComponent: () => import('./pages/admin/asset-type/asset-type.component').then(m => m.AssetTypeComponent) },
+      // Audits moved from itadmin and auditor
+      { path: 'CreateAudit', loadComponent: () => import('./pages/itadmin/create-audit/create-audit.component').then(m => m.CreateAuditComponent) },
+      { path: 'ApproveAuditedAssets', loadComponent: () => import('./pages/itadmin/approve-audited-assets/approve-audited-assets.component').then(m => m.ApproveAuditedAssetsComponent) },
+      { path: 'AuditReports', loadComponent: () => import('./pages/itadmin/audit-list/audit-list.component').then(m => m.AuditListComponent) },
+      { path: 'AuditAssets', loadComponent: () => import('./pages/itadmin/audit-assets/audit-assets.component').then(m => m.AuditAssetsComponent) },
+      { path: 'AuditCompletion', loadComponent: () => import('./pages/itadmin/audit-completion/audit-completion.component').then(m => m.AuditCompletionComponent) },
+      { path: 'EditAuditedAsset', loadComponent: () => import('./pages/itadmin/edit-audited-asset/edit-audited-asset.component').then(m => m.EditAuditedAssetComponent) },
+      { path: 'AssetReports', loadComponent: () => import('./pages/itadmin/asset-reports/asset-reports.component').then(m => m.AssetReportsComponent) },
+      { path: 'QRCodeManager', loadComponent: () => import('./pages/itadmin/qr-code-manager/qr-code-manager.component').then(m => m.QrCodeManagerComponent) },
     ]
   },
   {
@@ -57,20 +69,12 @@ export const routes: Routes = [
       { path: 'AdminViewCustodianChangeRequests', loadComponent: () => import('./pages/itadmin/admin-approve-custodian-transfer/admin-approve-custodian-transfer.component').then(m => m.AdminApproveCustodianTransferComponent) },
       { path: 'ViewApprovedCustodianTransfer', loadComponent: () => import('./pages/itadmin/view-custodian-transfer/view-custodian-transfer.component').then(m => m.ViewCustodianTransferComponent) },
       { path: 'AdminViewLocationChange', loadComponent: () => import('./pages/itadmin/admin-approve-location-transfer/admin-approve-location-transfer.component').then(m => m.AdminApproveLocationTransferComponent) },
-      { path: 'ViewApprovedLocationTransfer', loadComponent: () => import('./pages/itadmin/view-location-transfer/view-location-transfer.component').then(m => m.ViewLocationTransferComponent) },
+      { path: 'ViewLocationTransfer', loadComponent: () => import('./pages/itadmin/view-location-transfer/view-location-transfer.component').then(m => m.ViewLocationTransferComponent) },
       { path: 'ViewAllRequests', loadComponent: () => import('./pages/itadmin/view-all-requests/view-all-requests.component').then(m => m.ViewAllRequestsComponent) },
       { path: 'AdminViewBuyBackAssets', loadComponent: () => import('./pages/itadmin/admin-approve-buyback/admin-approve-buyback.component').then(m => m.AdminApproveBuybackComponent) },
       { path: 'ViewApprovedBuyBackAssets', loadComponent: () => import('./pages/itadmin/view-buyback-history/view-buyback-history.component').then(m => m.ViewBuybackHistoryComponent) },
       { path: 'AdminViewAssetReturn', loadComponent: () => import('./pages/itadmin/admin-approve-return/admin-approve-return.component').then(m => m.AdminApproveReturnComponent) },
       { path: 'ViewApprovedAssetReturn', loadComponent: () => import('./pages/itadmin/view-return-history/view-return-history.component').then(m => m.ViewReturnHistoryComponent) },
-      { path: 'CreateAudit', loadComponent: () => import('./pages/itadmin/create-audit/create-audit.component').then(m => m.CreateAuditComponent) },
-      { path: 'ApproveAuditedAssets', loadComponent: () => import('./pages/itadmin/approve-audited-assets/approve-audited-assets.component').then(m => m.ApproveAuditedAssetsComponent) },
-      { path: 'AuditReports', loadComponent: () => import('./pages/itadmin/audit-list/audit-list.component').then(m => m.AuditListComponent) },
-      { path: 'AuditAssets', loadComponent: () => import('./pages/itadmin/audit-assets/audit-assets.component').then(m => m.AuditAssetsComponent) },
-      { path: 'AuditCompletion', loadComponent: () => import('./pages/itadmin/audit-completion/audit-completion.component').then(m => m.AuditCompletionComponent) },
-      { path: 'EditAuditedAsset', loadComponent: () => import('./pages/itadmin/edit-audited-asset/edit-audited-asset.component').then(m => m.EditAuditedAssetComponent) },
-      { path: 'AssetReports', loadComponent: () => import('./pages/itadmin/asset-reports/asset-reports.component').then(m => m.AssetReportsComponent) },
-      { path: 'QRCodeManager', loadComponent: () => import('./pages/itadmin/qr-code-manager/qr-code-manager.component').then(m => m.QrCodeManagerComponent) },
     ]
   },
   {
@@ -88,17 +92,16 @@ export const routes: Routes = [
       { path: 'custodian-transfer-history', loadComponent: () => import('./pages/requestor/custodian-transfer-history/custodian-transfer-history.component').then(m => m.CustodianTransferHistoryComponent) },
       { path: 'asset-return', loadComponent: () => import('./pages/requestor/asset-return/asset-return.component').then(m => m.AssetReturnComponent) },
       { path: 'asset-return-history', loadComponent: () => import('./pages/requestor/asset-return-history/asset-return-history.component').then(m => m.AssetReturnHistoryComponent) },
-
     ]
   },
   {
-path: 'auditor',
-component: MainLayoutComponent,
-children: [ 
-   { path: 'ViewAudits', loadComponent: () => import('./pages/auditor/view-audits/view-audits.component').then(m => m.ViewAuditsComponent) },
-   { path: 'AssetAudits', loadComponent: () => import('./pages/auditor/asset-audit/asset-audit.component').then(m => m.AssetAuditComponent) },
-   { path: 'AuditStatus', loadComponent: () => import('./pages/auditor/audit-status/audit-status').then(m => m.AuditStatusComponent) },
-   {path: 'AssetByAudit', loadComponent: () => import('./pages/auditor/assets-by-audits/assets-by-audits').then(m => m.AssetsByAuditsComponent) },
+    path: 'auditor',
+    component: MainLayoutComponent,
+    children: [
+      { path: 'ViewAudits', loadComponent: () => import('./pages/auditor/view-audits/view-audits.component').then(m => m.ViewAuditsComponent) },
+      { path: 'AssetAudits', loadComponent: () => import('./pages/auditor/asset-audit/asset-audit.component').then(m => m.AssetAuditComponent) },
+      { path: 'AuditStatus', loadComponent: () => import('./pages/auditor/audit-status/audit-status').then(m => m.AuditStatusComponent) },
+      { path: 'AssetByAudit', loadComponent: () => import('./pages/auditor/assets-by-audits/assets-by-audits').then(m => m.AssetsByAuditsComponent) },
     ]
   },
   {

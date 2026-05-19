@@ -86,14 +86,38 @@ export class SidebarComponent implements OnInit, OnDestroy {
             { name: "Assign Non NRL User", path: "/admin/add-employee" },
             { name: "Assign Asset Class to Department", path: "/admin/add-asset-class" },
             { name: "Assign Dept wise Admin, Auditor", path: "/admin/asset-mapping" },
-            {name:"Location Master", path:"/admin/add-location"},
+            { name: "Location Master", path: "/admin/add-location" },
             { name: "Hr Finance Master", path: "/admin/hr-finance" },
             { name: "Dept Master", path: "/admin/view-departments" },
             { name: "Employee Details", path: "/admin/view-employees" },
             { name: "Dept wise Employees", path: "/admin/dept-custodian-list" },
+            { name: "Document Master", path: "/admin/document-master" },
+            { name: "Service Type", path: "/admin/service-type" },
+            { name: "Asset Type", path: "/admin/asset-type" },
           ],
         },
-      
+        {
+          name: "Asset Auditing",
+          icon: "fact_check",
+          subMenu: [
+            { name: "Create Audit", path: "/admin/CreateAudit" },
+            { name: "Approve Audits Assets", path: "/admin/ApproveAuditedAssets" },
+            { name: "Completed Audits", path: "/admin/AuditCompletion" },
+            { name: "Edit Audit Assets", path: "/admin/EditAuditedAsset" },
+            // { name: "View Audits List", path: "/admin/ViewAudits" },
+            // { name: "Perform Asset Audits", path: "/admin/AssetAudits" },
+            // { name: "Audit wise status", path: "/admin/AuditStatus" },
+            // { name: "Asset By Audit", path: "/admin/AssetByAudit" },
+          ],
+        },
+        {
+          name: "Reports",
+          icon: "bar_chart",
+          subMenu: [
+            { name: "Audit Reports", path: "/admin/AuditReports" },
+            { name: "Asset Reports", path: "/admin/AssetReports" },
+          ],
+        },
       ],
 
       "IT-Admin": [
@@ -170,24 +194,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
             { name: "QRCodes for Asset Create Date", path: "/itadmin/QRCodeManager" },
           ],
         },
-        {
-          name: "Asset Auditing",
-          icon: "fact_check",
-          subMenu: [
-            { name: "Create Audit", path: "/itadmin/CreateAudit" },
-            { name: "Approve Audits Assets", path: "/itadmin/ApproveAuditedAssets" },
-            { name: "Completed Audits", path: "/itadmin/AuditCompletion" },
-            { name: "Edit Audit Assets", path: "/itadmin/EditAuditedAsset" },
-          ],
-        },
-        {
-          name: "View Reports",
-          icon: "bar_chart",
-          subMenu: [
-            { name: "Audit Reports", path: "/itadmin/AuditReports" },
-            { name: "Asset Reports", path: "/itadmin/AssetReports" },
-          ],
-        },
       ],
 
       "HR Admin": [
@@ -231,14 +237,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
       "Auditor": [
         { name: "Dashboard", path: "/auditor", icon: "dashboard" },
         {
-          name: "Audits",
-          icon: "inventory_2",
+          name: "Asset Auditing",
+          icon: "fact_check",
           subMenu: [
-            { name: "View Audits", path: "/auditor/ViewAudits" },
-            { name: "Asset Audits", path: "/auditor/AssetAudits" },
-            // { name: "Edit Audit Assets", path: "/auditor/EditAuditAsset" },
+            { name: "View Audits List", path: "/auditor/ViewAudits" },
+            { name: "Perform Asset Audits", path: "/auditor/AssetAudits" },
             { name: "Audit wise status", path: "/auditor/AuditStatus" },
-            { name: "AssetByAudit", path: "/auditor/AssetByAudit" },
+            { name: "Asset By Audit", path: "/auditor/AssetByAudit" },
           ],
         },
       ],
