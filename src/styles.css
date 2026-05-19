@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Syncfusion Theme */
 @import '@syncfusion/ej2-base/styles/material3.css';
 @import '@syncfusion/ej2-buttons/styles/material3.css';
 @import '@syncfusion/ej2-calendars/styles/material3.css';
@@ -10,6 +9,7 @@
 @import '@syncfusion/ej2-popups/styles/material3.css';
 @import '@syncfusion/ej2-splitbuttons/styles/material3.css';
 @import '@syncfusion/ej2-grids/styles/material3.css';
+@import '@syncfusion/ej2-multicolumn-combobox/styles/material3.css';
 
 @import 'tailwindcss';
 

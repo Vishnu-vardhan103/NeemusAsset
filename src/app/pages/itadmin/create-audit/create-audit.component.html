@@ -98,17 +98,14 @@
                 [dataSource]="activeLocationData"
                 [fields]="locationFields"
                 placeholder="Select Location"
+                popupHeight="220px"
                 popupWidth="600px"
-                [gridSettings]="{
-                  allowPaging: true,
-                  pageSettings: { pageSize: 5 },
-                  allowFiltering: true
-                }">
+                showClearButton="true">
                 <e-columns>
-                  <e-column field="locationID"   headerText="Location ID"   width="90"></e-column>
-                  <e-column field="locationCode" headerText="Location Code" width="120"></e-column>
-                  <e-column field="block"        headerText="Block"         width="100"></e-column>
-                  <e-column field="location"     headerText="Location"      width="250"></e-column>
+                  <e-column field="locationID"   header="Location ID"   width="90"></e-column>
+                  <e-column field="locationCode" header="Location Code" width="120"></e-column>
+                  <e-column field="block"        header="Block"         width="100"></e-column>
+                  <e-column field="location"     header="Location"      width="250"></e-column>
                 </e-columns>
               </ejs-multicolumncombobox>
             </ng-template>
