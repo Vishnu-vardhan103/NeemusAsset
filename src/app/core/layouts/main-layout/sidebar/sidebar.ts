@@ -95,6 +95,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
             { name: "Service Type", path: "/admin/service-type" },
             { name: "Asset Type", path: "/admin/asset-type" },
             { name: "Asset Class Master", path: "/admin/asset-class" },
+              { name: "Asset Status Change", path: "/itadmin/AssetChangeUpdate" },
           ],
         },
         {
@@ -105,6 +106,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
             { name: "Approve Audits Assets", path: "/admin/ApproveAuditedAssets" },
             { name: "Completed Audits", path: "/admin/AuditCompletion" },
             { name: "Edit Audit Assets", path: "/admin/EditAuditedAsset" },
+
             // { name: "View Audits List", path: "/admin/ViewAudits" },
             // { name: "Perform Asset Audits", path: "/admin/AssetAudits" },
             // { name: "Audit wise status", path: "/admin/AuditStatus" },
@@ -128,7 +130,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
           icon: "inventory_2",
           subMenu: [
             { name: "View Assets List", path: "/itadmin/ViewImportedAssets" },
-            { name: "Asset Status Change", path: "/itadmin/AssetChangeUpdate" },
+            // { name: "Asset Status Change", path: "/itadmin/AssetChangeUpdate" },
             { name: "Add Asset Documents", path: "/itadmin/add-documents" },
             { name: "View Asset Export History", path: "/itadmin/ExportHistory" },
             { name: "View Asset Location on map", path: "/itadmin/assets/location" },

@@ -1,10 +1,5 @@
 <div class="p-6 space-y-6">
 
-  <!-- Page Header -->
-
-
-  
-
   <!-- Grid Card -->
   <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-xl border border-slate-200 overflow-hidden">
 
@@ -56,38 +51,17 @@
             [validationRules]="coderules">
           </e-column>
 
-          <!-- Audit Name -->
-          <e-column
-            field="auditName"
-            headerText="Audit Name"
-            width="200"
-            textAlign="Left"
-            defaultValue=""
-            [validationRules]="namerules">
-          </e-column>
-
-          <!-- Audit Description -->
-          <e-column
-            field="auditDescription"
-            headerText="Audit Description"
-            width="250"
-            textAlign="Left"
-            defaultValue="">
-          </e-column>
-
-          <!-- Location Column -->
+          <!-- Location — first in add/edit dialog -->
           <e-column
             field="locationID"
             headerText="Location"
             width="180"
             textAlign="Left">
 
-            <!-- Display: show location name -->
             <ng-template #template let-data>
               <span>{{ getLocationName(data.locationID) }}</span>
             </ng-template>
 
-            <!-- Edit: MultiColumnComboBox -->
             <ng-template #editTemplate let-data>
               <ejs-multicolumncombobox
                 id="locationID"
@@ -112,7 +86,43 @@
 
           </e-column>
 
-          <!-- Audit Status -->
+          <e-column
+            field="auditName"
+            headerText="Audit Name"
+            width="200"
+            textAlign="Left"
+            defaultValue=""
+            [validationRules]="namerules">
+          </e-column>
+
+          <e-column
+            field="auditDescription"
+            headerText="Audit Description"
+            width="250"
+            textAlign="Left"
+            defaultValue="">
+          </e-column>
+
+          <!-- Status — grid display only (no field = not in dialog) -->
+          <e-column
+            headerText="Status"
+            width="130"
+            textAlign="Left"
+            [allowEditing]="false"
+            [allowFiltering]="false">
+            <ng-template #template let-data>
+              <span
+                class="px-3 py-1 rounded-full text-xs font-bold"
+                [ngClass]="{
+                  'bg-sky-100 text-sky-700': data.status === 'Started',
+                  'bg-emerald-100 text-emerald-700': data.status === 'Completed',
+                  'bg-slate-100 text-slate-600': data.status !== 'Started' && data.status !== 'Completed'
+                }">
+                {{ data.status || 'Started' }}
+              </span>
+            </ng-template>
+          </e-column>
+
           <e-column
             field="auditStatus"
             headerText="Audit Status"
@@ -120,7 +130,6 @@
             textAlign="Left"
             defaultValue="Active">
 
-            <!-- Display: colored badge -->
             <ng-template #template let-data>
               <span
                 class="px-3 py-1 rounded-full text-xs font-bold"
@@ -132,9 +141,13 @@
               </span>
             </ng-template>
 
-            <!-- Edit: DropDownList -->
             <ng-template #editTemplate let-data>
+              <span *ngIf="isAddMode"
+                class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
+                Active
+              </span>
               <ejs-dropdownlist
+                *ngIf="!isAddMode"
                 id="auditStatus"
                 name="auditStatus"
                 [(ngModel)]="data.auditStatus"
@@ -145,7 +158,6 @@
 
           </e-column>
 
-          <!-- Action Commands -->
           <e-column
             headerText="Manage Records"
             width="160"

@@ -1,0 +1,202 @@
+:host {
+    display: block;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* ── Toolbar: Add Button ─────────────────────────────────────────────────── */
+
+::ng-deep #assetStatusGrid_add,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add {
+    background-color: #10b981 !important;
+    border-radius: 6px !important;
+    margin-right: 10px !important;
+    overflow: hidden !important;
+}
+
+::ng-deep #assetStatusGrid_add .e-tbar-btn,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add .e-tbar-btn {
+    background-color: transparent !important;
+    color: white !important;
+    border: none !important;
+    padding: 2px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+::ng-deep #assetStatusGrid_add:hover,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add:hover {
+    background-color: #059669 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+::ng-deep #assetStatusGrid_add .e-tbar-btn-text,
+::ng-deep #assetStatusGrid_add .e-icons,
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-add .e-icons {
+    color: white !important;
+}
+
+/* ── Toolbar: Overall ────────────────────────────────────────────────────── */
+
+::ng-deep .e-grid .e-toolbar {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 8px !important;
+}
+
+/* ── Toolbar: Export Icon Colors ─────────────────────────────────────────── */
+
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-excelexport .e-icons {
+    color: #059669 !important;
+}
+
+::ng-deep .e-grid .e-toolbar .e-toolbar-item.e-pdfexport .e-icons {
+    color: #dc2626 !important;
+}
+
+/* ── Dialog ──────────────────────────────────────────────────────────────── */
+
+.e-dialog {
+    width: 520px !important;
+    max-width: 520px !important;
+}
+
+.e-dialog-content {
+    height: auto !important;
+    min-height: 300px !important;
+}
+
+/* ── Input Wrappers ──────────────────────────────────────────────────────── */
+
+::ng-deep .e-multi-column-combobox.e-input-group,
+::ng-deep .e-dropdownlist.e-input-group,
+::ng-deep .e-input-group.e-control-wrapper {
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    background-color: #ffffff !important;
+}
+
+::ng-deep .e-multi-column-combobox.e-input-group:focus-within,
+::ng-deep .e-dropdownlist.e-input-group:focus-within,
+::ng-deep .e-input-group.e-control-wrapper:focus-within,
+::ng-deep .e-input-group.e-input-focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12) !important;
+}
+
+::ng-deep .e-input-group input.e-input,
+::ng-deep .e-input-group.e-control-wrapper input.e-input {
+    font-size: 14px !important;
+    color: #1e293b !important;
+    font-family: inherit !important;
+    padding-left: 12px !important;
+}
+
+/* ── MultiColumnComboBox Popup ───────────────────────────────────────────── */
+
+::ng-deep .e-multi-column-combobox-popup {
+    border-radius: 12px !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        0 4px 6px -2px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+::ng-deep .e-multi-column-combobox-popup .e-gridheader {
+    background-color: #f8fafc !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+}
+
+::ng-deep .e-multi-column-combobox-popup .e-headercell,
+::ng-deep .e-multi-column-combobox-popup .e-headercell * {
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+}
+
+::ng-deep .e-multi-column-combobox-popup .e-row:hover .e-rowcell {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+::ng-deep .e-multi-column-combobox-popup .e-row.e-selected-row .e-rowcell {
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
+    font-weight: 600 !important;
+}
+
+::ng-deep .e-multi-column-combobox-popup .e-filterbarcell input {
+    border-radius: 6px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 4px 8px !important;
+}
+
+/* ── Hide native hidden select ───────────────────────────────────────────── */
+
+::ng-deep .e-multicolumn-list-hidden,
+::ng-deep select.e-multicolumn-list-hidden,
+::ng-deep select[aria-hidden="true"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    position: absolute !important;
+    pointer-events: none !important;
+}
+
+/* ── Dropdown / Combobox icon ────────────────────────────────────────────── */
+
+::ng-deep .e-input-group-icon.e-multicolumncombobox-icon,
+::ng-deep .e-input-group-icon.e-ddl-icon {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #475569 !important;
+    font-size: 12px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+::ng-deep .e-input-group-icon.e-multicolumncombobox-icon::before {
+    content: '\e22c' !important;
+    font-family: 'e-icons' !important;
+    color: #475569 !important;
+}
+
+::ng-deep .e-input-group-icon.e-ddl-icon::before {
+    color: #475569 !important;
+}
+
+/* ── Grid row hover ──────────────────────────────────────────────────────── */
+
+::ng-deep .e-grid .e-row:hover .e-rowcell {
+    background-color: #f8fafc !important;
+}
+
+/* ── Command column icons ────────────────────────────────────────────────── */
+
+::ng-deep .e-grid .e-unboundcell .e-icons.e-edit {
+    color: #3b82f6 !important;
+}
+
+::ng-deep .e-grid .e-unboundcell .e-icons.e-delete {
+    color: #ef4444 !important;
+}
+
+::ng-deep .e-grid .e-unboundcell .e-icons.e-update {
+    color: #10b981 !important;
+}

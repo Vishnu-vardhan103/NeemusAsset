@@ -129,10 +129,11 @@ export class AuditCompletionComponent implements OnInit {
     this.http.get<any[]>(URL + '/AuditDetails', { headers }).subscribe({
       next: (res) => {
         this.completions = res || [];
-        this.activeAuditData = (res || []).filter(item =>
-          item?.status?.trim().toLowerCase() === 'active' &&
-          item?.auditStatus?.trim().toLowerCase() !== 'completed'
-        );
+        this.activeAuditData = (res || []).filter(item => {
+          const status = (item?.status ?? '').trim().toLowerCase();
+          const auditStatus = (item?.auditStatus ?? '').trim().toLowerCase();
+          return (status === 'started' || status === 'active') && auditStatus === 'active';
+        });
         if (this.grid) this.grid.refresh();
       },
       error: (err) => console.error('Error fetching audits:', err)
@@ -201,8 +202,8 @@ export class AuditCompletionComponent implements OnInit {
         custodianName:       this.formAuditRecord.custodianName       || '',
         completionDate:      this.formCompletionDate,
         adminRemarks:        this.formAdminRemarks || '',
-        auditStatus:         'Completed',   // AuditStatus → Completed
-        status:              'InActive'     // Status       → InActive
+        status:              'Completed',
+        auditStatus:         'Inactive'   // lifecycle: completed + inactive
       };
 
       console.log('Payload being sent:', payload);

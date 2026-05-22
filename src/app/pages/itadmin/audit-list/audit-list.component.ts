@@ -104,6 +104,55 @@ export class AuditListComponent implements OnInit {
     return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
+  private norm(value: any): string {
+    return (value ?? '').toString().trim().toLowerCase();
+  }
+
+  canComplete(audit: any): boolean {
+    const status = this.norm(audit.status);
+    const auditStatus = this.norm(audit.auditStatus);
+    return (status === 'started' || status === 'active') && auditStatus === 'active';
+  }
+
+  completeAudit(audit: any): void {
+    if (!this.canComplete(audit)) {
+      return;
+    }
+    if (!confirm(`Mark audit "${audit.auditName}" as completed?`)) {
+      return;
+    }
+
+    const payload = {
+      auditID: audit.auditID,
+      auditName: audit.auditName,
+      auditDescription: audit.auditDescription || '',
+      locationID: audit.locationID,
+      auditDate: audit.auditDate || null,
+      auditBy: audit.auditBy || '',
+      unitNo: audit.unitNo || '',
+      totalStock: audit.totalStock || 0,
+      custodianDepartment: audit.custodianDepartment || '',
+      custDepartmentCode: audit.custDepartmentCode || '',
+      custDesignation: audit.custDesignation || '',
+      custodianName: audit.custodianName || '',
+      completionDate: new Date().toISOString(),
+      adminRemarks: audit.adminRemarks || '',
+      status: 'Completed',
+      auditStatus: 'Inactive'
+    };
+
+    this.http.put(URL + '/UpdateAudit', payload, { headers, responseType: 'text' }).subscribe({
+      next: () => {
+        alert('Audit completed successfully');
+        this.loadData();
+      },
+      error: (err) => {
+        console.error('Complete audit error:', err);
+        alert('Failed to complete audit');
+      }
+    });
+  }
+
   onFilterChange(): void {
     this.applyFilter();
   }
@@ -122,30 +171,23 @@ export class AuditListComponent implements OnInit {
         break;
 
       case 'Current':
-        this.auditData = this.rawData.filter(a => {
-          const s = (a.auditStatus ?? '').trim().toLowerCase();
-          return s === 'active' || s === 'in progress' || s === 'open';
-        });
+        this.auditData = this.rawData.filter(a => this.canComplete(a));
         break;
 
       case 'Pending':
-        this.auditData = this.rawData.filter(a =>
-          (a.auditStatus ?? '').trim().toLowerCase() === 'pending'
-        );
+        this.auditData = this.rawData.filter(a => this.norm(a.auditStatus) === 'pending');
         break;
 
       case 'Completed':
         this.auditData = this.rawData.filter(a => {
-          const auditStatus = (a.auditStatus ?? '').trim().toLowerCase();
-          const status = (a.status ?? '').trim().toLowerCase();
-          return auditStatus === 'completed' || status === 'completed';
+          const status = this.norm(a.status);
+          const auditStatus = this.norm(a.auditStatus);
+          return status === 'completed' && auditStatus === 'inactive';
         });
         break;
 
       case 'Approved':
-        this.auditData = this.rawData.filter(a =>
-          (a.auditStatus ?? '').trim().toLowerCase() === 'approved'
-        );
+        this.auditData = this.rawData.filter(a => this.norm(a.auditStatus) === 'approved');
         break;
 
       case 'LocationWise':

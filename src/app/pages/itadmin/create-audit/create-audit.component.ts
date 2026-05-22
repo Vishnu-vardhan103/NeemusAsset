@@ -69,6 +69,7 @@ export class CreateAuditComponent implements OnInit {
   public activeLocationData: any[] = [];
   public locationFields: Object = { text: 'location', value: 'locationID' };
   public selectedGridLocation: any = null;
+  public isAddMode = false;
 
   public pageSettings: PageSettingsModel = { pageSize: 10, pageSizes: true };
   public toolbar: string[] = ['Add', 'Search', 'ExcelExport', 'PdfExport', 'ColumnChooser'];
@@ -152,8 +153,30 @@ export class CreateAuditComponent implements OnInit {
       });
   }
 
+  private buildInsertPayload(data: any): any {
+    return {
+      auditID: 0,
+      auditName: data.auditName,
+      auditDescription: data.auditDescription || '',
+      locationID: data.locationID,
+      status: 'Started',
+      auditStatus: 'Active',
+      auditDate: null,
+      auditBy: '',
+      unitNo: '',
+      totalStock: 0,
+      custodianDepartment: '',
+      custDepartmentCode: '',
+      custDesignation: '',
+      custodianName: '',
+      completionDate: null,
+      adminRemarks: ''
+    };
+  }
+
   saveAudit(data: any): void {
-    this.http.post(URL + '/InsertAudit', data, { headers })
+    const body = this.buildInsertPayload(data);
+    this.http.post(URL + '/InsertAudit', body, { headers })
       .subscribe({
         next: (res) => {
           console.log('Insert response:', res);
@@ -216,23 +239,29 @@ export class CreateAuditComponent implements OnInit {
 
   actionBegin(args: any): void {
     if (args.requestType === 'add') {
+      this.isAddMode = true;
       this.selectedGridLocation = null;
       if (args.rowData) {
         args.rowData.locationID = null;
+        args.rowData.status = 'Started';
         args.rowData.auditStatus = 'Active';
         args.rowData.auditName = '';
         args.rowData.auditDescription = '';
       }
 
     } else if (args.requestType === 'beginEdit') {
+      this.isAddMode = false;
       if (args.rowData) {
         this.selectedGridLocation = args.rowData.locationID ?? null;
-        console.log('beginEdit selectedGridLocation:', this.selectedGridLocation);
       }
 
     } else if (args.requestType === 'save') {
+      if (args.action === 'add' && args.data) {
+        args.data.status = 'Started';
+        args.data.auditStatus = 'Active';
+      }
+
       if (args.data) {
-        // Fallback: use selectedGridLocation first, then args.data.locationID
         const locationID = this.selectedGridLocation ?? args.data.locationID ?? null;
 
         if (!locationID) {
@@ -244,6 +273,8 @@ export class CreateAuditComponent implements OnInit {
         args.data.locationID = Number(locationID);
         this.selectedGridLocation = Number(locationID);
       }
+    } else if (args.requestType === 'cancel') {
+      this.isAddMode = false;
     }
   }
 
@@ -251,20 +282,22 @@ export class CreateAuditComponent implements OnInit {
     if (args.requestType === 'save') {
       const locationID = this.selectedGridLocation ?? args.data.locationID ?? null;
 
-      const payload = {
+      const payload: any = {
         auditID: args.data.auditID || 0,
         auditName: args.data.auditName,
         auditDescription: args.data.auditDescription || '',
-        auditStatus: args.data.auditStatus || 'Active',
         locationID: Number(locationID)
       };
 
-      console.log('Saving payload:', payload);
-
       if (args.action === 'add') {
         this.saveAudit(payload);
+        this.isAddMode = false;
       } else if (args.action === 'edit') {
-        this.updateAudit(payload);
+        this.updateAudit({
+          ...payload,
+          status: args.data.status || 'Started',
+          auditStatus: args.data.auditStatus || 'Active'
+        });
       }
 
     } else if (args.requestType === 'delete') {

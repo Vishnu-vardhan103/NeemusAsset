@@ -122,6 +122,24 @@
           </e-column>
 
           <e-column
+            headerText="Status"
+            width="130"
+            textAlign="Left"
+            [allowFiltering]="false">
+            <ng-template #template let-data>
+              <span
+                class="px-3 py-1 rounded-full text-xs font-bold"
+                [ngClass]="{
+                  'bg-sky-100 text-sky-700': data.status === 'Started',
+                  'bg-emerald-100 text-emerald-700': data.status === 'Completed',
+                  'bg-slate-100 text-slate-600': data.status !== 'Started' && data.status !== 'Completed'
+                }">
+                {{ data.status }}
+              </span>
+            </ng-template>
+          </e-column>
+
+          <e-column
             field="auditStatus"
             headerText="Audit Status"
             width="150"
@@ -130,12 +148,30 @@
               <span
                 class="px-3 py-1 rounded-full text-xs font-bold"
                 [ngClass]="{
-                  'bg-emerald-100 text-emerald-700': data.auditStatus === 'Active' || data.auditStatus === 'Approved' || data.auditStatus === 'Completed',
-                  'bg-amber-100 text-amber-700': data.auditStatus === 'Pending' || data.auditStatus === 'In Progress',
-                  'bg-rose-100 text-rose-700': data.auditStatus === 'Inactive' || data.auditStatus === 'InActive'
+                  'bg-emerald-100 text-emerald-700': data.auditStatus === 'Active',
+                  'bg-rose-100 text-rose-700': data.auditStatus === 'Inactive' || data.auditStatus === 'InActive',
+                  'bg-amber-100 text-amber-700': data.auditStatus !== 'Active' && data.auditStatus !== 'Inactive' && data.auditStatus !== 'InActive'
                 }">
                 {{ data.auditStatus }}
               </span>
+            </ng-template>
+          </e-column>
+
+          <e-column
+            headerText="Complete"
+            width="120"
+            textAlign="Center"
+            [allowFiltering]="false"
+            [allowSorting]="false">
+            <ng-template #template let-data>
+              <button
+                *ngIf="canComplete(data)"
+                type="button"
+                (click)="completeAudit(data)"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-white hover:bg-emerald-600 transition-colors">
+                Complete
+              </button>
+              <span *ngIf="!canComplete(data)" class="text-xs text-slate-400">—</span>
             </ng-template>
           </e-column>
 
