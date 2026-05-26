@@ -25,7 +25,8 @@ import {
   ReorderService,
   SearchService
 } from '@syncfusion/ej2-angular-grids';
-
+const URL = BASE_URL;
+const headers = new HttpHeaders();
 @Component({
   selector: 'app-view-employees',
   standalone: true,
@@ -83,37 +84,49 @@ export class ViewEmployeesComponent implements OnInit {
   }
 
   getEmployees() {
-    this.http.get<any>(`${this.apiUrl}/CustodianDetails`, { headers: this.headers })
+     this.http.get<any[]>(URL + '/CustodianDetails', { headers })
       .subscribe({
         next: (res) => {
-          console.log('Employees API Response:', res);
-          let data = [];
-          if (Array.isArray(res)) {
-            data = res;
-          } else if (res && Array.isArray(res.result)) {
-            data = res.result;
-          } else if (res && Array.isArray(res.data)) {
-            data = res.data;
-          } else if (res && res.$values && Array.isArray(res.$values)) {
-            data = res.$values;
-          }
-
-          this.employees = data.map((item: any) => ({
-            ...item,
-            CustodianID: item.CustodianID || item.custodianID || item.id || item.CustodianId,
-            CustodianName: item.CustodianName || item.custodianName || item.name || item.FullName,
-            CustodianDepartmentCode: item.CustodianDepartmentCode || item.departmentCode || item.DepartmentCode || item.deptCode,
-            Designation: item.Designation || item.designation,
-            ReportingStaffNo: item.ReportingStaffNo || item.reportingStaffNo,
-            Email: item.Email || item.email,
-            CustodianStatus: item.CustodianStatus || item.custodianStatus || item.status || 'Active'
-          }));
-          this.cdr.detectChanges();
+          this.employees = res;
+            if (this.grid) {
+          this.grid.refresh();
+        }
         },
         error: (err) => {
-          console.error('Error fetching employees:', err);
+          console.error('Error fetching locations:', err);
         }
       });
+    // this.http.get<any>(`${this.apiUrl}/CustodianDetails`, { headers: this.headers })
+    //   .subscribe({
+    //     next: (res) => {
+    //       console.log('Employees API Response:', res);
+    //       let data = [];
+    //       if (Array.isArray(res)) {
+    //         data = res;
+    //       } else if (res && Array.isArray(res.result)) {
+    //         data = res.result;
+    //       } else if (res && Array.isArray(res.data)) {
+    //         data = res.data;
+    //       } else if (res && res.$values && Array.isArray(res.$values)) {
+    //         data = res.$values;
+    //       }
+
+    //       this.employees = data.map((item: any) => ({
+    //         ...item,
+    //         CustodianID: item.CustodianID || item.custodianID || item.id || item.CustodianId,
+    //         CustodianName: item.CustodianName || item.custodianName || item.name || item.FullName,
+    //         CustodianDepartmentCode: item.CustodianDepartmentCode || item.departmentCode || item.DepartmentCode || item.deptCode,
+    //         Designation: item.Designation || item.designation,
+    //         ReportingStaffNo: item.ReportingStaffNo || item.reportingStaffNo,
+    //         Email: item.Email || item.email,
+    //         CustodianStatus: item.CustodianStatus || item.custodianStatus || item.status || 'Active'
+    //       }));
+    //       this.cdr.detectChanges();
+    //     },
+    //     error: (err) => {
+    //       console.error('Error fetching employees:', err);
+    //     }
+    //   });
   }
 
   actionComplete(args: any): void {

@@ -128,7 +128,7 @@ updateAssets(data: any) {
 }
 
 deleteAssets(data: any) {
-  this.http.delete(URL + '/DeleteAssetClass/' + data.assetclassid,{ headers }
+  this.http.delete(URL + '/DeleteAssetClass/' + data.assetClassID,{ headers }
   ).subscribe({
     next: (res) => {
       console.log(res);
